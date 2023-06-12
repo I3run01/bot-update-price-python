@@ -12,7 +12,7 @@ class Product:
     def __init__(
             self,
             is_new: bool,
-            ours_code: str, 
+            ours_code: str or None, 
             c_ean: str,
             cost_price: float,
             ncm: str,
@@ -28,6 +28,10 @@ class Product:
         self._commercial_name = commercial_name
         self._selling_cost = selling_price(cost_price, margin)
         self._old_selling_price = old_selling_price
+    
+    @property
+    def ours_code(self):
+        return self._is_new
     
     @property
     def ours_code(self):
