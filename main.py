@@ -16,8 +16,6 @@ products = res['products']
 
 csv_manipulation.create_csv_if_not_exists(csv_path)
 
-print(products)
-
 for product in products:
     datas = csv_manipulation.get_row_by_cEAN(csv_path, product['cEAN'])
 
@@ -35,5 +33,9 @@ for product in products:
 
         products_list.append(new_product)
 
+c = 0
+print('index | comercial Name | margin | price')
 for item in products_list:
-    print(item)
+    print(item.c_ean)
+    print('')
+    c = c+1

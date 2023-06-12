@@ -26,6 +26,7 @@ class Product:
         self._cost_price = cost_price
         self._ncm = ncm
         self._commercial_name = commercial_name
+        self._margin = margin
         self._selling_cost = selling_price(cost_price, margin)
         self._old_selling_price = old_selling_price
     
@@ -52,6 +53,10 @@ class Product:
     @property
     def commercial_name(self):
         return self._commercial_name
+    
+    @property
+    def margin(self):
+        return self._margin
 
     @property
     def selling_cost(self):
