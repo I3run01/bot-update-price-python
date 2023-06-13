@@ -71,3 +71,8 @@ class Product:
     @property
     def old_selling_price(self):
         return self._old_selling_price
+    
+    @margin.setter
+    def margin(self, value: float):
+        self._margin = value
+        self._selling_cost = selling_price(self._cost_price, self._margin)
