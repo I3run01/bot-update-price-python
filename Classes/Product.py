@@ -17,6 +17,7 @@ class Product:
             cost_price: float,
             ncm: str,
             commercial_name: str,
+            nfe_name: str,
             margin: float,
             old_selling_price: float
         ):
@@ -26,12 +27,13 @@ class Product:
         self._cost_price = cost_price
         self._ncm = ncm
         self._commercial_name = commercial_name
+        self._nfe_name = nfe_name
         self._margin = margin
         self._selling_cost = selling_price(cost_price, margin)
         self._old_selling_price = old_selling_price
     
     @property
-    def ours_code(self):
+    def is_new(self):
         return self._is_new
     
     @property
@@ -53,6 +55,10 @@ class Product:
     @property
     def commercial_name(self):
         return self._commercial_name
+    
+    @property
+    def nfe_name(self):
+        return self._nfe_name
     
     @property
     def margin(self):

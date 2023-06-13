@@ -1,6 +1,7 @@
 import Request.sendXML as req
 import utils.csv_manipulation as csv_manipulation
 from Classes.Product import Product
+from termcolor import colored
 
 products_list = []
 
@@ -27,6 +28,7 @@ for product in products:
             cost_price= float(product['costPrice']),
             ncm = product['ncm'],
             commercial_name = product['comercialName'],
+            nfe_name= product['nfeName'],
             margin=50,
             old_selling_price = 0
         )
@@ -34,8 +36,17 @@ for product in products:
         products_list.append(new_product)
 
 c = 0
-print('index | comercial Name | margin | price')
 for item in products_list:
-    print(item.c_ean)
+    print(30*'=')
     print('')
+    print(f'comercial name: {item.commercial_name}')
+    print(f'our code: {item.ours_code}')
+    print(f'NFE name: {item.nfe_name}')
+    print(f'cEAN: {colored(item.c_ean, "yellow")}')
+    print(f'Margin: {item.margin}')
+    print(f'Price: {colored(item.old_selling_price, "red")} -> {colored(item.selling_cost, "green")}')
+    print('')
+    print(30*'=')
     c = c+1
+
+
