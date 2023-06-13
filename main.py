@@ -35,7 +35,6 @@ for product in products:
 
         products_list.append(new_product)
 
-c = 0
 for item in products_list:
     print(30*'=')
     print('')
@@ -47,6 +46,6 @@ for item in products_list:
     print(f'Price: {colored(item.old_selling_price, "red")} -> {colored(item.selling_cost, "green")}')
     print('')
     print(30*'=')
-    c = c+1
 
-
+while True:
+    print('')
