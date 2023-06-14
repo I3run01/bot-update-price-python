@@ -22,7 +22,7 @@ def open_gestor():
     pyautogui.write('1515')
     pyautogui.press('enter')
 
-def update_price(obj: dict, status: Union[Literal['increase'], Literal['any']]):
+def update_price(products: list, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.PAUSE = 1.5
 
     open_gestor()
@@ -30,4 +30,10 @@ def update_price(obj: dict, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.click(200,650)
     pyautogui.click(200,360)
 
-update_price({'car':'blue'}, 'increase')
+    for product in product:
+        print(product)
+
+        if(product.old_selling_price > product.new_selling_price):
+            continue
+
+    pyautogui.tripleClick(420,200)
