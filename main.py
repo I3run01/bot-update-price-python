@@ -17,8 +17,8 @@ def show_products_list():
         print(f'our code: {item.ours_code}')
         print(f'NFE name: {item.nfe_name}')
         print(f'cEAN: {colored(item.c_ean, "yellow")}')
-        print(f'Margin: {fg(margin_color)}{item.margin}{attr(0)}%')
-        print(f'Price: R${colored(item.old_selling_price, "red")} -> R${colored(item.new_selling_price, "green")}')
+        print(f'Margin (%): {fg(margin_color)}{item.margin}{attr(0)}')
+        print(f'Price (R$): {colored(item.old_selling_price, "red")} -> {colored(item.new_selling_price, "green")}')
         print('')
         print(30*'=')
 
@@ -112,6 +112,6 @@ while True:
             print('You selected the option 1')
 
     except Exception as e:
-        print(f"Caught an error: {e}")
+        print(colored(f"Caught an error: {e}", 'red'))
         time.sleep(1)
         continue

@@ -75,4 +75,4 @@ class Product:
     @margin.setter
     def margin(self, value: float):
         self._margin = value
-        self._selling_cost = selling_price(self._cost_price, self._margin)
+        self._new_selling_price = selling_price(self._cost_price, self._margin)
