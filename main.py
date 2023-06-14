@@ -17,8 +17,8 @@ def show_products_list():
         print(f'our code: {item.ours_code}')
         print(f'NFE name: {item.nfe_name}')
         print(f'cEAN: {colored(item.c_ean, "yellow")}')
-        print(f'{fg(margin_color)}Margin: {item.margin}{attr(0)}')
-        print(f'Price: {colored(item.old_selling_price, "red")} -> {colored(item.selling_cost, "green")}')
+        print(f'Margin: {fg(margin_color)}{item.margin}{attr(0)}%')
+        print(f'Price: R${colored(item.old_selling_price, "red")} -> R${colored(item.selling_cost, "green")}')
         print('')
         print(30*'=')
 
