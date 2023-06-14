@@ -30,10 +30,47 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
     pyautogui.click(200,650)
     pyautogui.click(200,360)
 
-    for product in product:
+    for product in products:
         print(product)
 
-        if(product.old_selling_price > product.new_selling_price):
-            continue
+        if(status == 'increase'):
 
-    pyautogui.tripleClick(420,200)
+            if(product.old_selling_price > product.new_selling_price):
+                continue
+
+            if(product.ours_code):
+                is_produc_exists_internally = True
+            else: 
+                is_produc_exists_internally = False
+
+            #Confirming if product exists
+            if(is_produc_exists_internally == False):
+                pyautogui.press('esc')
+                pyautogui.click(200,460)
+                pyautogui.write(product.c_ean)
+                pyautogui.press('Enter')
+
+                pyperclip.copy('')
+
+                pyautogui.doubleClick(200,310)
+
+                pyautogui.hotkey('ctrl', 'c')
+
+                text = pyperclip.paste().strip()
+
+                if(len(text) < 2):
+                    is_produc_exists_internally = False
+
+                else:
+                    is_produc_exists_internally = True
+
+                pyautogui.press('Enter')
+
+                pyautogui.press('esc')
+
+                print(is_produc_exists_internally)
+
+
+
+            
+
