@@ -91,7 +91,6 @@ while True:
             product = find_product_by_ean(products_list, product_cEAN)
 
             if product is None:
-                time.sleep(2)
                 raise ValueError("Product not found")
             
             try:
@@ -114,4 +113,5 @@ while True:
 
     except Exception as e:
         print(f"Caught an error: {e}")
+        time.sleep(1)
         continue
