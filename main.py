@@ -2,18 +2,22 @@ import Request.sendXML as req
 import utils.csv_manipulation as csv_manipulation
 from Classes.Product import Product
 from termcolor import colored
+from colored import fg, attr
 from utils.obj_from_list import find_product_by_ean
 import time
 
-def show_poduct_list():
+def show_products_list():
     for item in products_list:
+
+        margin_color = 'blue' if float(item.margin) != 50 else 'white'
+
         print(30*'=')
         print('')
         print(f'comercial name: {item.commercial_name}')
         print(f'our code: {item.ours_code}')
         print(f'NFE name: {item.nfe_name}')
         print(f'cEAN: {colored(item.c_ean, "yellow")}')
-        print(f'Margin: {item.margin}')
+        print(f'{fg(margin_color)}Margin: {item.margin}{attr(0)}')
         print(f'Price: {colored(item.old_selling_price, "red")} -> {colored(item.selling_cost, "green")}')
         print('')
         print(30*'=')
@@ -57,15 +61,15 @@ for product in products:
 
         products_list.append(new_product)
 
-show_poduct_list()
+show_products_list()
 
 while True:
 
     print(30*'=')
 
     try:
-        print('0 - Change the product margin')
-        print('1 - Create the new products and update the prices that increased.')
+        print('0 - Change the product margin.')
+        print('1 - create, print and update the products that increased, then, emit nfe')
         print(30*'=')
 
         print('')
@@ -82,7 +86,7 @@ while True:
             print('You selected the option 0')
             time.sleep(0.5)
 
-            product_cEAN = str(input('Put the cEAN of the product that you want to chnge the margin: '))
+            product_cEAN = str(input(f'To change the margin, first put the product {colored("cEAN", "yellow")}: '))
 
             product = find_product_by_ean(products_list, product_cEAN)
 
@@ -97,13 +101,11 @@ while True:
             
             product.margin = new_margin
 
-            print(product.margin)
-
             print(f'the new margin of the {product.commercial_name} is {product.margin}')
 
-            #show_poduct_list()
+            time.sleep(1)
 
-            
+            show_products_list()
 
             print(30*'=')
 
