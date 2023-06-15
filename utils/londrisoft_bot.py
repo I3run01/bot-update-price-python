@@ -52,7 +52,7 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
                 pyperclip.copy('')
 
-                pyautogui.doubleClick(200,310)
+                pyautogui.doubleClick(50,310)
 
                 pyautogui.hotkey('ctrl', 'c')
 
@@ -68,9 +68,16 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
                 pyautogui.press('esc')
 
+                pyautogui.press('Tab')
+
+                pyautogui.press('Enter')
+
+                pyautogui.click(200,360)
+
                 print(is_produc_exists_internally)
 
-
+                if(is_produc_exists_internally):
+                    print('')
 
             
 
