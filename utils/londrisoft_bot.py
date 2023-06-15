@@ -77,7 +77,8 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
                 print(is_produc_exists_internally)
 
                 if(is_produc_exists_internally):
-                    print('')
+                    product.ours_code = text
 
+                    pyautogui.moveTo(400, 300)
             
 

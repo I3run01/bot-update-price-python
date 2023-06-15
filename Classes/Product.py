@@ -76,3 +76,7 @@ class Product:
     def margin(self, value: float):
         self._margin = value
         self._new_selling_price = selling_price(self._cost_price, self._margin)
+
+    @ours_code.setter
+    def ours_code(self, value: str):
+        self._ours_code = value
