@@ -80,3 +80,7 @@ class Product:
     @ours_code.setter
     def ours_code(self, value: str):
         self._ours_code = value
+
+    @new_selling_price.setter
+    def new_selling_price(self, value: str):
+        self._new_selling_price = value

@@ -22,6 +22,52 @@ def open_gestor():
     pyautogui.write('1515')
     pyautogui.press('enter')
 
+def update_product_price(
+        product: object,
+        status: Union[Literal['increase'], Literal['any']]
+):
+    pyautogui.tripleClick(450, 200)
+
+    pyautogui.write(product.c_ean)
+
+    pyautogui.press('Enter')
+
+    pyautogui.press('Enter')
+
+    pyautogui.tripleClick(750, 650)
+
+    if(status == 'any'):
+        new_price = product.new_selling_price
+
+        new_price_with_comma = new_price.replace(".", ",")
+
+        pyautogui.write(new_price_with_comma)
+
+        pyautogui.press('Enter')
+
+    pyautogui.hotkey('ctrl', 'c')
+
+    content_price_str = pyperclip.paste().strip().replace(",", ".")
+
+    ls_price = float(content_price_str)
+
+    if(ls_price > product.new_selling_price):
+        product.new_selling_price = ls_price
+
+        print(product.new_selling_price)
+
+    else:
+        new_price_str = str(product.new_selling_price)
+
+        new_price = new_price_str.replace('.', ',')
+
+        pyautogui.write(new_price)
+
+        pyautogui.press('Enter')
+
+    pyautogui.click(300, 100)
+
+
 def update_price(products: list, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.PAUSE = 1.5
 
@@ -31,7 +77,6 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
     pyautogui.click(200,360)
 
     for product in products:
-        print(product)
 
         if(status == 'increase'):
 
@@ -74,11 +119,8 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
                 pyautogui.click(200,360)
 
-                print(is_produc_exists_internally)
+            if(is_produc_exists_internally):
+                product.ours_code = text
 
-                if(is_produc_exists_internally):
-                    product.ours_code = text
-
-                    pyautogui.moveTo(400, 300)
-            
+                update_product_price(product, status)
 
