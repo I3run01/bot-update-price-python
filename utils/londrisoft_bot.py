@@ -80,7 +80,7 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
         if(status == 'increase'):
 
-            if(product.old_selling_price > product.new_selling_price):
+            if(product.old_selling_price > product.new_selling_price and product.ours_code):
                 continue
 
             if(product.ours_code):
@@ -123,4 +123,6 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
                 product.ours_code = text
 
                 update_product_price(product, status)
+
+    
 
