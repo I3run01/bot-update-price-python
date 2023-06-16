@@ -68,6 +68,40 @@ def update_product_price(
     pyautogui.click(300, 100)
 
 
+def has_product_in_LS(product):
+    if(product.ours_code):
+        return True
+
+    pyautogui.press('esc')
+    pyautogui.click(200,460)
+    pyautogui.write(product.c_ean)
+    pyautogui.press('Enter')
+
+    pyperclip.copy('')
+
+    pyautogui.doubleClick(50,310)
+
+    pyautogui.hotkey('ctrl', 'c')
+
+    text = pyperclip.paste().strip()
+
+    if(len(text) < 2):
+        return False
+
+    pyautogui.press('Enter')
+
+    pyautogui.press('esc')
+
+    pyautogui.press('Tab')
+
+    pyautogui.press('Enter')
+
+    pyautogui.click(200,360)
+
+    product.ours_code = text
+
+    return True
+
 def update_price(products: list, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.PAUSE = 1.5
 
@@ -82,46 +116,8 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
             if(product.old_selling_price > product.new_selling_price and product.ours_code):
                 continue
-
-            if(product.ours_code):
-                is_produc_exists_internally = True
-            else: 
-                is_produc_exists_internally = False
-
-            #Confirming if product exists
-            if(is_produc_exists_internally == False):
-                pyautogui.press('esc')
-                pyautogui.click(200,460)
-                pyautogui.write(product.c_ean)
-                pyautogui.press('Enter')
-
-                pyperclip.copy('')
-
-                pyautogui.doubleClick(50,310)
-
-                pyautogui.hotkey('ctrl', 'c')
-
-                text = pyperclip.paste().strip()
-
-                if(len(text) < 2):
-                    is_produc_exists_internally = False
-
-                else:
-                    is_produc_exists_internally = True
-
-                pyautogui.press('Enter')
-
-                pyautogui.press('esc')
-
-                pyautogui.press('Tab')
-
-                pyautogui.press('Enter')
-
-                pyautogui.click(200,360)
-
-            if(is_produc_exists_internally):
-                product.ours_code = text
-
+           
+            if(has_product_in_LS(product)):
                 update_product_price(product, status)
 
     
