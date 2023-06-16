@@ -5,7 +5,7 @@ products_list = [
     Product(
         is_new=True,
         ours_code=None,
-        c_ean="7896336006624",
+        c_ean="7896336006624t",
         cost_price=1,
         ncm="abcd",
         commercial_name="Poçoca",

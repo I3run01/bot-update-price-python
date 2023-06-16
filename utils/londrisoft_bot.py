@@ -2,6 +2,7 @@ from typing import Union, Literal
 import pyperclip
 import pyautogui
 import time
+from datetime import datetime
 
 def open_gestor():
 
@@ -67,7 +68,6 @@ def update_product_price(
 
     pyautogui.click(300, 100)
 
-
 def has_product_in_LS(product):
     if(product.ours_code):
         return True
@@ -85,9 +85,6 @@ def has_product_in_LS(product):
 
     text = pyperclip.paste().strip()
 
-    if(len(text) < 2):
-        return False
-
     pyautogui.press('Enter')
 
     pyautogui.press('esc')
@@ -98,9 +95,49 @@ def has_product_in_LS(product):
 
     pyautogui.click(200,360)
 
+    if(len(text) < 1 or len(text) > 30):
+        return False
+
     product.ours_code = text
 
     return True
+
+def create_product(product):
+    while True:
+        current_date = datetime.now()
+
+        attempts = 0
+
+        current_day = current_date.day
+        current_month = current_date.month
+        current_year = current_date.year
+
+        unique_code = str(current_day) + str(current_month) + str(current_year) + str(attempts)
+
+        pyautogui.click(250, 100)
+
+        pyautogui.write(unique_code)
+
+        pyautogui.press('Enter')
+
+        pyautogui.tripleClick(750, 650)
+
+        pyperclip.copy('')
+
+        pyautogui.hotkey('ctrl', 'c')
+
+        text = pyperclip.paste().strip()
+
+        if(len(text) > 10):
+            attempts = attempts + 1
+
+            pyautogui.press('Enter')
+
+        else:
+            break
+
+    print('continue')
+
 
 def update_price(products: list, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.PAUSE = 1.5
@@ -116,9 +153,14 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
             if(product.old_selling_price > product.new_selling_price and product.ours_code):
                 continue
+
+            has_product_internally = has_product_in_LS(product)
            
-            if(has_product_in_LS(product)):
+            if(has_product_internally):
                 update_product_price(product, status)
+
+            else:
+                create_product(product)
 
     
 
