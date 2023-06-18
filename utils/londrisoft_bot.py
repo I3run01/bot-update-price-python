@@ -232,6 +232,6 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
     pyautogui.press('Enter')
 
-    pyautogui.moveTo(600, 100)
+    pyautogui.click(750, 27)
     
 
