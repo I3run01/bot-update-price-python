@@ -4,7 +4,7 @@ from Classes.Product import Product
 products_list = [
     Product(
         is_new=True,
-        ours_code='1606215',
+        ours_code='3378',
         c_ean="7896336006624t",
         cost_price=1,
         ncm="20079990",

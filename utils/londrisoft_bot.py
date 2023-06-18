@@ -220,6 +220,10 @@ def print_labels(our_codes: list):
         pyautogui.press('enter')
         pyautogui.click(260,60)
 
+    pyautogui.press('esc')
+
+    pyautogui.moveTo(500, 30)
+
 def update_price(products: list, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.PAUSE = 1.5
 
