@@ -4,15 +4,11 @@ import pandas as pd
 def create_csv_if_not_exists(file_path):
     # Corrected column names
     columns = [
-        "business_code", 
         "ours_code",
         "margin" 
         "cEAN", 
-        "commercial_name"
         "selling_price", 
-        "cost_price",
         "date_of_last_update", 
-        "ncm",
         "nfe_name",
     ]
 

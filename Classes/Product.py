@@ -16,6 +16,7 @@ class Product:
             c_ean: str,
             cost_price: float,
             ncm: str,
+            cest: str,
             commercial_name: str | None,
             nfe_name: str,
             margin: float,
@@ -26,6 +27,7 @@ class Product:
         self._c_ean = c_ean
         self._cost_price = cost_price
         self._ncm = ncm
+        self._cest = cest
         self._commercial_name = commercial_name
         self._nfe_name = nfe_name
         self._margin = margin
@@ -51,6 +53,10 @@ class Product:
     @property
     def ncm(self):
         return self._ncm
+    
+    @property
+    def cest(self):
+        return self._cest
 
     @property
     def commercial_name(self):

@@ -53,6 +53,7 @@ for product in products:
             c_ean = product['cEAN'],
             cost_price= float(product['costPrice']),
             ncm = product['ncm'],
+            cest = product['cest'],
             commercial_name = product['comercialName'],
             nfe_name= product['nfeName'],
             margin=50,
