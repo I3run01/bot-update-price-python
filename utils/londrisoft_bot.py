@@ -193,8 +193,6 @@ def create_product(product):
 
     pyautogui.press('Entes')
 
-    
-
     print('continue')
 
 
