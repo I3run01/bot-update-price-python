@@ -8,11 +8,13 @@ products_list = [
         c_ean="7896336006624t",
         cost_price=1,
         ncm="20079990",
+        cest='1709400',
         commercial_name="Poçoca",
         nfe_name="Poçoca",
         margin=50,
         old_selling_price=0.0,
     ),
+    
     # Product(
     #     is_new=False,
     #     ours_code="2345",

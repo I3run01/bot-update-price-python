@@ -191,10 +191,17 @@ def create_product(product):
 
     pyautogui.write(product.ncm)
 
-    pyautogui.press('Entes')
+    pyautogui.press('Enter')
 
-    print('continue')
+    pyautogui.press('Enter')
 
+    pyautogui.press('esc')
+    
+    pyautogui.write(product.cest)
+
+    pyautogui.click(140,150)
+
+    pyautogui.click(300, 100)
 
 def update_price(products: list, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.PAUSE = 1.5
@@ -204,20 +211,27 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
     pyautogui.click(200,650)
     pyautogui.click(200,360)
 
-    for product in products:
+    # for product in products:
 
-        if(status == 'increase'):
+    #     if(status == 'increase'):
 
-            if(product.old_selling_price > product.new_selling_price and product.ours_code):
-                continue
+    #         if(product.old_selling_price > product.new_selling_price and product.ours_code):
+    #             continue
 
-            has_product_internally = has_product_in_LS(product)
+    #         has_product_internally = has_product_in_LS(product)
            
-            if(has_product_internally):
-                update_product_price(product, status)
+    #         if(has_product_internally):
+    #             update_product_price(product, status)
 
-            else:
-                create_product(product)
+    #         else:
+    #             create_product(product)
+                
+    pyautogui.press('esc')
 
+    pyautogui.press('esc')
+
+    pyautogui.press('Enter')
+
+    pyautogui.moveTo(600, 100)
     
 
