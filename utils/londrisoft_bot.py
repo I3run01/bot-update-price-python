@@ -134,6 +134,7 @@ def create_product(product):
             pyautogui.press('Enter')
 
         else:
+            product.ours_code(unique_code)
             break
 
     pyautogui.click(400, 200)
@@ -203,6 +204,22 @@ def create_product(product):
 
     pyautogui.click(300, 100)
 
+def print_labels(our_codes: list):
+
+    pyautogui.click(900,520)
+    pyautogui.click(250,100)
+
+    for our_code in our_codes:
+
+        pyautogui.tripleClick(400,400)
+        pyautogui.write(our_code)
+        time.sleep(.5)
+        pyautogui.press('enter')
+        pyautogui.press('enter')
+        pyautogui.click(480,600)
+        pyautogui.press('enter')
+        pyautogui.click(260,60)
+
 def update_price(products: list, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.PAUSE = 1.5
 
@@ -233,5 +250,11 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
     pyautogui.press('Enter')
 
     pyautogui.click(750, 27)
-    
+
+    our_code_print_list = []
+    for product in products:
+        if(product.new_selling_price > product.old_selling_price):
+            our_code_print_list.append(product.ours_code)
+
+    print_labels(our_code_print_list)
 
