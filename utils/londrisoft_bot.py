@@ -136,6 +136,44 @@ def create_product(product):
         else:
             break
 
+    pyautogui.click(400, 200)
+
+    pyautogui.write(product.c_ean)
+
+    pyautogui.press('Enter')
+
+    pyautogui.tripleClick(400, 230)
+
+    if(product.commercial_name):
+        pyperclip.copy(product.commercial_name)
+    
+    else:
+        pyperclip.copy(product.nfe_name)
+
+    pyautogui.hotkey('ctrl', 'v')
+    
+    pyautogui.press('Enter')
+
+    pyautogui.click(400, 662)
+
+    pyautogui.moveTo(400, 690)
+
+    time.sleep(1)
+
+    pyautogui.click()
+
+    pyautogui.tripleClick(750, 650)
+
+    new_price = product.new_selling_price
+
+    new_price_str = str(new_price).replace('.',',')
+
+    pyautogui.write(new_price_str)
+
+    pyautogui.press('Enter')
+
+    pyautogui.moveTo(200, 150)
+
     print('continue')
 
 
