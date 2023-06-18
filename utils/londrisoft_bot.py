@@ -172,7 +172,28 @@ def create_product(product):
 
     pyautogui.press('Enter')
 
-    pyautogui.moveTo(200, 150)
+    pyautogui.click(200, 150)
+
+    #tributes
+    pyautogui.click(80, 235)
+
+    pyautogui.write('040')
+
+    pyautogui.doubleClick(130, 410)
+
+    pyautogui.write('07')
+
+    pyautogui.doubleClick(600, 410)
+
+    pyautogui.write('07')
+
+    pyautogui.doubleClick(130, 570)
+
+    pyautogui.write(product.ncm)
+
+    pyautogui.press('Entes')
+
+    
 
     print('continue')
 
