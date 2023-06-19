@@ -39,13 +39,9 @@ while True:
 
 csv_path = f'database/{res["name"]}.csv'
 
-print('worked')
-
 products = res['products']
 
 csv_manipulation.create_csv_if_not_exists(csv_path)
-
-print('worked 2')
 
 for product in products:
     datas = csv_manipulation.get_row_by_cEAN(csv_path, product['cEAN'])
