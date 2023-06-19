@@ -5,7 +5,7 @@ def create_csv_if_not_exists(file_path):
     # Corrected column names
     columns = [
         "ours_code",
-        "margin" 
+        "margin",  # added comma here
         "cEAN", 
         "selling_price", 
         "date_of_last_update", 
