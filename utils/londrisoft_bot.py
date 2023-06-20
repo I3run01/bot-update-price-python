@@ -104,9 +104,9 @@ def has_product_in_LS(product):
 
 def create_product(product):
     while True:
-        current_date = datetime.now()
-
         attempts = 0
+
+        current_date = datetime.now()
 
         current_day = current_date.day
         current_month = current_date.month

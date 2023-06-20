@@ -6,6 +6,7 @@ from colored import fg, attr
 from utils.obj_from_list import find_product_by_ean
 import utils.londrisoft_bot as bot
 import time
+import random
 
 def show_products_list():
     for item in products_list:
@@ -142,8 +143,20 @@ while True:
         elif(option == '3'):
             print('You selected the option 3')
             time.sleep(2)
-            bot.just_update_products(products_list, 'increase')
 
+            # TODO: discomment the following line after the test
+            # bot.just_update_products(products_list, 'increase')
+
+            
+            for product in products_list:
+
+                # TODO: the following code between the todo is just a test code
+                test_our_code = random.randint(100, 10000000)
+                product.ours_code = test_our_code
+                # TODO: here finish the test code
+
+                csv_manipulation.update_row(csv_path, product)
+            
         elif(option == '4'):
             print('You selected the option 4')
             time.sleep(2)
