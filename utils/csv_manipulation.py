@@ -38,6 +38,8 @@ def update_row(file_path, product: object):
 
     current_date = f'{current_month}/{current_day}/{current_year}'
 
+    # TODO: read this article: https://www.geeksforgeeks.org/update-column-value-of-csv-in-python/
+
     if set(product.c_ean).intersection(set(df['cEAN'].values)):
         df.loc[df['cEAN'] == product.c_ean, 'ours_code'] = product.ours_code
         df.loc[df['cEAN'] == product.c_ean, 'selling_price'] = product.new_selling_price
