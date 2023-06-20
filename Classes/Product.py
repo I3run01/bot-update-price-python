@@ -16,7 +16,7 @@ class Product:
             c_ean: str,
             cost_price: float,
             ncm: str,
-            cest: str,
+            cest: str or None,
             commercial_name: str | None,
             nfe_name: str,
             margin: float,

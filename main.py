@@ -4,6 +4,7 @@ from Classes.Product import Product
 from termcolor import colored
 from colored import fg, attr
 from utils.obj_from_list import find_product_by_ean
+import utils.londrisoft_bot as bot
 import time
 
 def show_products_list():
@@ -31,7 +32,6 @@ while True:
         with open(xmlFile, 'rb') as f:
             files = {'file': f}
             res = req.sendXML(files)
-
         break
 
     except:
@@ -70,7 +70,9 @@ while True:
 
     try:
         print('0 - Change the product margin.')
-        print('1 - create, print and update the products that increased, then, emit nfe')
+        print('1 - create, print and update the products that increased')
+        print('2 - create and update the products that increased')
+        print('3 - print the products that increased')
         print(30*'=')
 
         print('')
@@ -111,8 +113,20 @@ while True:
 
         elif(option == '1'):
             print('You selected the option 1')
+            time.sleep(1)
+            bot.update_and_print_products(products_list, 'increase')
+
+        elif(option == '2'):
+            print('You selected the option 2')
+            time.sleep(2)
+            bot.just_update_products(products, 'increase')
+
+        elif(option == '3'):
+            print('You selected the option 3')
+            time.sleep(2)
+            bot.just_print_products(products_list, 'increase')
 
     except Exception as e:
         print(colored(f"Caught an error: {e}", 'red'))
-        time.sleep(1)
+        time.sleep(2)
         continue

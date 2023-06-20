@@ -197,8 +197,9 @@ def create_product(product):
     pyautogui.press('Enter')
 
     pyautogui.press('esc')
-    
-    pyautogui.write(product.cest)
+
+    if(product.cest):
+        pyautogui.write(product.cest)
 
     pyautogui.click(140,150)
 
@@ -226,7 +227,7 @@ def print_labels(our_codes: list):
 
     pyautogui.click(450, 30)
 
-def update_price(products: list, status: Union[Literal['increase'], Literal['any']]):
+def update_and_print_products(products: list, status: Union[Literal['increase'], Literal['any']]):
     pyautogui.PAUSE = 1.5
 
     open_gestor()
@@ -248,6 +249,15 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
             else:
                 create_product(product)
+        
+        else: 
+            has_product_internally = has_product_in_LS(product)
+           
+            if(has_product_internally):
+                update_product_price(product, status)
+
+            else:
+                create_product(product)
                 
     pyautogui.press('esc')
 
@@ -261,8 +271,61 @@ def update_price(products: list, status: Union[Literal['increase'], Literal['any
 
     our_code_print_list = []
     for product in products:
-        if(product.new_selling_price > product.old_selling_price):
-            our_code_print_list.append(product.ours_code)
+
+        if(status == 'increase'):
+            if(product.new_selling_price > product.old_selling_price):
+                our_code_print_list.append(product.ours_code)
+        
+        else:
+           our_code_print_list.append(product.ours_code) 
 
     print_labels(our_code_print_list)
 
+def just_update_products(products: list, status: Union[Literal['increase'], Literal['any']]):
+    pyautogui.PAUSE = 1.5
+
+    open_gestor()
+
+    pyautogui.click(200,650)
+    pyautogui.click(200,360)
+
+    for product in products:
+
+        if(status == 'increase'):
+
+            if(product.old_selling_price > product.new_selling_price and product.ours_code):
+                continue
+
+            has_product_internally = has_product_in_LS(product)
+           
+            if(has_product_internally):
+                update_product_price(product, status)
+
+            else:
+                create_product(product)
+        
+        else: 
+            has_product_internally = has_product_in_LS(product)
+           
+            if(has_product_internally):
+                update_product_price(product, status)
+
+            else:
+                create_product(product)
+                
+def just_print_products(products: list, status: Union[Literal['increase'], Literal['any']]):
+    pyautogui.PAUSE = 1.5
+
+    open_gestor()
+
+    our_code_print_list = []
+    for product in products:
+
+        if(status == 'increase'):
+            if(product.new_selling_price > product.old_selling_price):
+                our_code_print_list.append(product.ours_code)
+        
+        else:
+           our_code_print_list.append(product.ours_code) 
+
+    print_labels(our_code_print_list)
