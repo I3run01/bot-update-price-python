@@ -48,7 +48,6 @@ for product in products:
 
     if(datas == None):
         new_product = Product(
-            is_new = True,
             ours_code = None,
             c_ean = product['cEAN'],
             cost_price= float(product['costPrice']),
@@ -57,7 +56,7 @@ for product in products:
             commercial_name = product['comercialName'],
             nfe_name= product['nfeName'],
             margin=50,
-            old_selling_price = 0
+            old_selling_price = 0,
         )
 
         products_list.append(new_product)
@@ -70,9 +69,10 @@ while True:
 
     try:
         print('0 - Change the product margin.')
-        print('1 - create, print and update the products that increased')
-        print('2 - create and update the products that increased')
-        print('3 - print the products that increased')
+        print('1 - Put sub item quantity.')
+        print('2 - create, print and update the products that increased')
+        print('3 - create and update the products that increased')
+        print('4 - print the products that increased')
         print(30*'=')
 
         print('')
@@ -114,15 +114,38 @@ while True:
         elif(option == '1'):
             print('You selected the option 1')
             time.sleep(1)
-            bot.update_and_print_products(products_list, 'increase')
+
+            for product in products_list:
+                if(product.commercial_name):
+                    print(f'the product name is: {colored(product.commercial_name, "blue")}')
+
+                else:
+                    print(f'the product name is: {colored(product.nfe_name, "blue")}')
+
+                sub_item_quantity = float(input('Put the quantity of the sub-item: '))
+
+                product.sub_item_quantity = sub_item_quantity
+
+                time.sleep(.5)
+
+                print(f'the new price of the product is {colored(product.new_selling_price, "green")}')
+
+                time.sleep(1)
+
+                print(30 * '-')
 
         elif(option == '2'):
             print('You selected the option 2')
-            time.sleep(2)
-            bot.just_update_products(products, 'increase')
+            time.sleep(1)
+            bot.update_and_print_products(products_list, 'increase')
 
         elif(option == '3'):
             print('You selected the option 3')
+            time.sleep(2)
+            bot.just_update_products(products_list, 'increase')
+
+        elif(option == '4'):
+            print('You selected the option 4')
             time.sleep(2)
             bot.just_print_products(products_list, 'increase')
 
