@@ -46,33 +46,28 @@ def update_row(file_path, product: object):
     product_index = None
 
     for row_number in range(0, rows_number):
-        dataframe_cEAN = float(df.loc[row_number, "cEAN"])
-        product_cEAN = float(product.c_ean)
+        dataframe_ours_code = str(df.loc[row_number, "ours_code"])
+        product_ours_code = str(product.ours_code)
 
-        if((dataframe_cEAN - product_cEAN) == 0):        
+        if(dataframe_ours_code == product_ours_code):        
             product_index = row_number
             break
     
-    if(product_index):
+    if(product_index != None):
         df.loc[product_index, 'selling_price'] = product.new_selling_price
         df.loc[product_index, 'date_of_last_update'] = current_date
+
     else:
-        print(dataframe_cEAN)
-        print(product_cEAN)
+        new_row = pd.DataFrame({
+            'ours_code': [product.ours_code], 
+            'margin': [product.margin], 
+            'cEAN': [product.c_ean], 
+            'selling_price': [product.new_selling_price], 
+            'date_of_last_update': [current_date], 
+            'nfe_name': [product.nfe_name]
+        })
+        df = pd.concat([df, new_row], ignore_index=True)
 
-        print(dataframe_cEAN - product_cEAN)
-        print(product_index)
-
-        new_row = {
-            'ours_code': product.ours_code, 
-            'margin': product.margin, 
-            'cEAN': product.c_ean, 
-            'selling_price': product.new_selling_price, 
-            'date_of_last_update': current_date, 
-            'nfe_name': product.nfe_name
-        }
-        df = df.append(new_row, ignore_index=True)
-
-    df.to_csv(file_path, index=False)
+        df.to_csv(file_path, index=False)
 
     return df

@@ -7,6 +7,7 @@ from utils.obj_from_list import find_product_by_ean
 import utils.londrisoft_bot as bot
 import time
 import random
+import sys
 
 def show_products_list():
     for item in products_list:
@@ -147,11 +148,12 @@ while True:
             # TODO: discomment the following line after the test
             # bot.just_update_products(products_list, 'increase')
 
-            
+            # TODO: eraser the c
+            c = 1000
             for product in products_list:
 
                 # TODO: the following code between the todo is just a test code
-                test_our_code = random.randint(100, 10000000)
+                test_our_code = c = c + 1
                 product.ours_code = test_our_code
                 # TODO: here finish the test code
 
