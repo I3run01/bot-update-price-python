@@ -46,18 +46,23 @@ def update_row(file_path, product: object):
     product_index = None
 
     for row_number in range(0, rows_number):
-        dataframe_cEAN = str(df.loc[row_number, "cEAN"])
-        product_cEAN = str(product.c_ean)
+        dataframe_cEAN = float(df.loc[row_number, "cEAN"])
+        product_cEAN = float(product.c_ean)
 
-        if(dataframe_cEAN == product_cEAN):        
+        if((dataframe_cEAN - product_cEAN) == 0):        
             product_index = row_number
             break
     
-    # TODO: Correct the following if
     if(product_index):
         df.loc[product_index, 'selling_price'] = product.new_selling_price
         df.loc[product_index, 'date_of_last_update'] = current_date
     else:
+        print(dataframe_cEAN)
+        print(product_cEAN)
+
+        print(dataframe_cEAN - product_cEAN)
+        print(product_index)
+
         new_row = {
             'ours_code': product.ours_code, 
             'margin': product.margin, 
