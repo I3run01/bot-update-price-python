@@ -176,16 +176,12 @@ while True:
             print('You selected the option 3')
             time.sleep(1)
 
-            # bot.just_update_products(products_list, 'increase')
+            bot.just_update_products(products_list, 'increase')
 
-            c = 1000
             for product in products_list:
-                product.ours_code = c
-                
-                if(float(product.new_selling_price) > float(product.old_selling_price)):
+               if(float(product.new_selling_price) > float(product.old_selling_price)):
                     csv_manipulation.update_row(csv_path, product)
 
-                c = c+1
             
         elif(option == '4'):
             print('You selected the option 4')
@@ -199,7 +195,7 @@ while True:
 
         elif(option == '9'):
             show_products_list()
-            
+
     except Exception as e:
         print(colored(f"Caught an error: {e}", 'red'))
         time.sleep(2)
