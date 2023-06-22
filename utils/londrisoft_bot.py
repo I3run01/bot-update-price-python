@@ -105,8 +105,9 @@ def has_product_in_LS(product):
     return True
 
 def create_product(product):
+
+    attempts = 0
     while True:
-        attempts = 0
 
         current_date = datetime.now()
 
@@ -136,7 +137,7 @@ def create_product(product):
             pyautogui.press('Enter')
 
         else:
-            product.ours_code(unique_code)
+            product.ours_code = unique_code
             break
 
     pyautogui.click(400, 200)

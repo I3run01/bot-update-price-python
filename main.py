@@ -128,6 +128,7 @@ while True:
             
             product.margin = new_margin
 
+
             print(f'the new margin of the {product.commercial_name} is {product.margin}')
 
             time.sleep(1)
