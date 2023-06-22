@@ -12,7 +12,8 @@ def create_csv_if_not_exists(file_path):
         "cost_price",
         "ncm",
         "nfe_name",
-        "date_of_last_update", 
+        "date_of_last_update",
+        "sub_itens_quantity", 
     ]
 
     if not os.path.exists(file_path):
@@ -21,13 +22,23 @@ def create_csv_if_not_exists(file_path):
         print(f"CSV file created at: {file_path}")
 
 def get_row_by_cEAN(file_path, cEAN):
-    df = pd.read_csv(file_path)
+    try:
+        df = pd.read_csv(file_path)
 
-    if cEAN in df['cEAN'].values:
-        row = df[df['cEAN'] == cEAN]
-        return row.to_dict(orient='records')[0]
-    else:
-        return None
+        rows_number = len(df)
+
+        product_index = None
+
+        for row_number in range(0, rows_number):
+            dataframe_cEAN = str(df.loc[row_number, "cEAN"])
+
+            if(dataframe_cEAN == str(cEAN)):        
+                product_index = row_number
+                break
+
+        return df.loc[product_index]
+    except:
+        raise ValueError("Product does not exist")
 
 def update_row(file_path, product: object):
 
@@ -66,7 +77,8 @@ def update_row(file_path, product: object):
             "cost_price": [product.cost_price],
             "ncm": [product.ncm],
             'date_of_last_update': [current_date], 
-            'nfe_name': [product.nfe_name]
+            'nfe_name': [product.nfe_name],
+            'sub_itens_quantity': [product.sub_item_quantity]
         })
         df = pd.concat([df, new_row], ignore_index=True)
 

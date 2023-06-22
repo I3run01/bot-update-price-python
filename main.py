@@ -13,11 +13,12 @@ def show_products_list():
     for item in products_list:
 
         margin_color = 'blue' if float(item.margin) != 50 else 'white'
+        ours_code_color = 'cyan' if item.ours_code != None else 'white'
 
         print(30*'=')
         print('')
         print(f'comercial name: {item.commercial_name}')
-        print(f'our code: {item.ours_code}')
+        print(f'our code: {fg(ours_code_color)}{item.ours_code}{attr(0)}')
         print(f'NFE name: {item.nfe_name}')
         print(f'cEAN: {colored(item.c_ean, "yellow")}')
         print(f'Margin (%): {fg(margin_color)}{item.margin}{attr(0)}')
@@ -46,24 +47,43 @@ products = res['products']
 csv_manipulation.create_csv_if_not_exists(csv_path)
 
 for product in products:
-    datas = csv_manipulation.get_row_by_cEAN(csv_path, product['cEAN'])
 
-    if(datas == None):
+    try:
+        product_datas = csv_manipulation.get_row_by_cEAN(csv_path, product['cEAN'])
+
         new_product = Product(
-            ours_code = None,
-            c_ean = product['cEAN'],
-            cost_price= float(product['costPrice']),
-            ncm = product['ncm'],
-            cest = product['cest'],
-            commercial_name = product['comercialName'],
-            nfe_name= product['nfeName'],
-            margin=50,
-            old_selling_price = 0,
-        )
+                ours_code = product_datas["ours_code"],
+                c_ean = product['cEAN'],
+                cost_price= float(product['costPrice']),
+                ncm = product['ncm'],
+                cest = product['cest'],
+                commercial_name = product['comercialName'],
+                nfe_name= product['nfeName'],
+                margin=product_datas["margin"],
+                old_selling_price = product_datas["selling_price"],
+            )
+        
+        if(product_datas["sub_itens_quantity"]):
+            product_datas_sub_itens_quantity = product_datas["sub_itens_quantity"]
+
+            new_product.sub_item_quantity = float(product_datas_sub_itens_quantity)
 
         products_list.append(new_product)
+        
+    except:
+        new_product = Product(
+                ours_code = None,
+                c_ean = product['cEAN'],
+                cost_price= float(product['costPrice']),
+                ncm = product['ncm'],
+                cest = product['cest'],
+                commercial_name = product['comercialName'],
+                nfe_name= product['nfeName'],
+                margin=50,
+                old_selling_price = 0,
+            )
 
-    # TODO: create the else
+        products_list.append(new_product)
 
 show_products_list()
 
@@ -73,10 +93,11 @@ while True:
 
     try:
         print('0 - Change the product margin.')
-        print('1 - Put sub item quantity.')
+        print('1 - Insert the quantity for the sub-item.')
         print('2 - Create, print and update the products that increased')
         print('3 - Just Create and update the products that increased')
         print('4 - Just print the products that increased')
+        print('9 - Show all products ')
         print(30*'=')
 
         print('')
@@ -120,6 +141,10 @@ while True:
             time.sleep(1)
 
             for product in products_list:
+                
+                if(product.ours_code != None):
+                    continue
+
                 if(product.commercial_name):
                     print(f'the product name is: {colored(product.commercial_name, "blue")}')
 
@@ -151,11 +176,16 @@ while True:
             print('You selected the option 3')
             time.sleep(1)
 
-            bot.just_update_products(products_list, 'increase')
+            # bot.just_update_products(products_list, 'increase')
 
+            c = 1000
             for product in products_list:
+                product.ours_code = c
+                
                 if(float(product.new_selling_price) > float(product.old_selling_price)):
                     csv_manipulation.update_row(csv_path, product)
+
+                c = c+1
             
         elif(option == '4'):
             print('You selected the option 4')
@@ -167,6 +197,9 @@ while True:
                 if(float(product.new_selling_price) > float(product.old_selling_price)):
                     csv_manipulation.update_row(csv_path, product)
 
+        elif(option == '9'):
+            show_products_list()
+            
     except Exception as e:
         print(colored(f"Caught an error: {e}", 'red'))
         time.sleep(2)

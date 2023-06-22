@@ -93,9 +93,11 @@ class Product:
     @sub_item_quantity.setter
     def sub_item_quantity(self, value: str):
         self._sub_item_quantity = value
+
+        self._cost_price = self._cost_price/value
+
         self._new_selling_price = selling_price(
             self._cost_price,
-            self._margin,
-            value
+            self._margin
         )
 
