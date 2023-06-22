@@ -132,13 +132,13 @@ def create_product(product):
         text = pyperclip.paste().strip()
 
         if(len(text) > 10):
-            attempts = attempts + 1
-
             pyautogui.press('Enter')
 
         else:
             product.ours_code = unique_code
             break
+
+        attempts = attempts + 1
 
     pyautogui.click(400, 200)
 
