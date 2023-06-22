@@ -4,6 +4,8 @@ import pyautogui
 import time
 from datetime import datetime
 
+pyautogui.PAUSE = 1.8
+
 def open_gestor():
 
     #open the gestor
@@ -228,8 +230,7 @@ def print_labels(our_codes: list):
     pyautogui.click(450, 30)
 
 def update_and_print_products(products: list, status: Union[Literal['increase'], Literal['any']]):
-    pyautogui.PAUSE = 1.5
-
+    
     open_gestor()
 
     pyautogui.click(200,650)
@@ -282,7 +283,6 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
     print_labels(our_code_print_list)
 
 def just_update_products(products: list, status: Union[Literal['increase'], Literal['any']]):
-    pyautogui.PAUSE = 1.5
 
     open_gestor()
 
@@ -314,7 +314,6 @@ def just_update_products(products: list, status: Union[Literal['increase'], Lite
                 create_product(product)
                 
 def just_print_products(products: list, status: Union[Literal['increase'], Literal['any']]):
-    pyautogui.PAUSE = 1.5
 
     open_gestor()
 
