@@ -63,6 +63,8 @@ for product in products:
 
         products_list.append(new_product)
 
+    # TODO: create the else
+
 show_products_list()
 
 while True:
@@ -72,9 +74,9 @@ while True:
     try:
         print('0 - Change the product margin.')
         print('1 - Put sub item quantity.')
-        print('2 - create, print and update the products that increased')
-        print('3 - create and update the products that increased')
-        print('4 - print the products that increased')
+        print('2 - Create, print and update the products that increased')
+        print('3 - Just Create and update the products that increased')
+        print('4 - Just print the products that increased')
         print(30*'=')
 
         print('')
@@ -141,28 +143,29 @@ while True:
             time.sleep(1)
             bot.update_and_print_products(products_list, 'increase')
 
+            for product in products_list:
+                if(float(product.new_selling_price) > float(product.old_selling_price)):
+                    csv_manipulation.update_row(csv_path, product)
+
         elif(option == '3'):
             print('You selected the option 3')
-            time.sleep(2)
+            time.sleep(1)
 
-            # TODO: discomment the following line after the test
-            # bot.just_update_products(products_list, 'increase')
+            bot.just_update_products(products_list, 'increase')
 
-            # TODO: eraser the c
-            c = 1000
             for product in products_list:
-
-                # TODO: the following code between the todo is just a test code
-                test_our_code = c = c + 1
-                product.ours_code = test_our_code
-                # TODO: here finish the test code
-
-                csv_manipulation.update_row(csv_path, product)
+                if(float(product.new_selling_price) > float(product.old_selling_price)):
+                    csv_manipulation.update_row(csv_path, product)
             
         elif(option == '4'):
             print('You selected the option 4')
-            time.sleep(2)
+            time.sleep(1)
+
             bot.just_print_products(products_list, 'increase')
+
+            for product in products_list:
+                if(float(product.new_selling_price) > float(product.old_selling_price)):
+                    csv_manipulation.update_row(csv_path, product)
 
     except Exception as e:
         print(colored(f"Caught an error: {e}", 'red'))

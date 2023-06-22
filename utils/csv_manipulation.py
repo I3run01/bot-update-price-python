@@ -3,14 +3,16 @@ import pandas as pd
 from datetime import datetime
 
 def create_csv_if_not_exists(file_path):
-    # Corrected column names
+
     columns = [
         "ours_code",
-        "margin",  # added comma here
+        "margin",
         "cEAN", 
-        "selling_price", 
-        "date_of_last_update", 
+        "selling_price",
+        "cost_price",
+        "ncm",
         "nfe_name",
+        "date_of_last_update", 
     ]
 
     if not os.path.exists(file_path):
@@ -37,8 +39,6 @@ def update_row(file_path, product: object):
 
     current_date = f'{current_month}/{current_day}/{current_year}'
 
-    # TODO: read this article: https://www.geeksforgeeks.org/update-column-value-of-csv-in-python/
-
     df = pd.read_csv(file_path)
 
     rows_number = len(df)
@@ -62,12 +62,14 @@ def update_row(file_path, product: object):
             'ours_code': [product.ours_code], 
             'margin': [product.margin], 
             'cEAN': [product.c_ean], 
-            'selling_price': [product.new_selling_price], 
+            'selling_price': [product.new_selling_price],
+            "cost_price": [product.cost_price],
+            "ncm": [product.ncm],
             'date_of_last_update': [current_date], 
             'nfe_name': [product.nfe_name]
         })
         df = pd.concat([df, new_row], ignore_index=True)
 
-        df.to_csv(file_path, index=False)
+    df.to_csv(file_path, index=False)
 
     return df

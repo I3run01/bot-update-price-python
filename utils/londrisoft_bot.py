@@ -95,7 +95,7 @@ def has_product_in_LS(product):
 
     pyautogui.click(200,360)
 
-    if(len(text) < 1 or len(text) > 30):
+    if(len(text) > 30):
         return False
 
     product.ours_code = text
