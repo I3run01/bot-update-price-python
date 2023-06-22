@@ -145,11 +145,7 @@ while True:
                 if(product.ours_code != None):
                     continue
 
-                if(product.commercial_name):
-                    print(f'the product name is: {colored(product.commercial_name, "blue")}')
-
-                else:
-                    print(f'the product name is: {colored(product.nfe_name, "blue")}')
+                print(f'the product name is: {colored(product.nfe_name, "blue")}')
 
                 sub_item_quantity = float(input('Put the quantity of the sub-item: '))
 
