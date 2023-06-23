@@ -70,7 +70,7 @@ def update_row(file_path, product: object):
 
     else:
         new_row = pd.DataFrame({
-            'ours_code': [product.ours_code], 
+            'ours_code': [str(product.ours_code)], 
             'margin': [product.margin], 
             'cEAN': [product.c_ean], 
             'selling_price': [product.new_selling_price],

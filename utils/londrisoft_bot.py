@@ -81,6 +81,7 @@ def has_product_in_LS(product):
 
     pyperclip.copy('')
 
+    # FIXME: The X coordeate should be more in the left
     pyautogui.doubleClick(50,310)
 
     pyautogui.hotkey('ctrl', 'c')
