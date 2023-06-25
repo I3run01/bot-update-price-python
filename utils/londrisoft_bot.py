@@ -82,7 +82,7 @@ def has_product_in_LS(product):
     pyperclip.copy('')
 
     # FIXME: The X coordeate should be more in the left
-    pyautogui.doubleClick(50,310)
+    pyautogui.doubleClick(40,310)
 
     pyautogui.hotkey('ctrl', 'c')
 
@@ -201,6 +201,10 @@ def create_product(product):
     pyautogui.press('Enter')
 
     pyautogui.press('esc')
+
+    pyautogui.press('Enter')
+
+    pyautogui.press('Enter')
 
     if(product.cest):
         pyautogui.write(product.cest)
