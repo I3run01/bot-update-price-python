@@ -5,6 +5,7 @@ from datetime import datetime
 def create_csv_if_not_exists(file_path):
 
     columns = [
+        "cProd",
         "ours_code",
         "margin",
         "cEAN", 
@@ -21,7 +22,7 @@ def create_csv_if_not_exists(file_path):
         df.to_csv(file_path, index=False)
         print(f"CSV file created at: {file_path}")
 
-def get_row_by_cEAN(file_path, cEAN):
+def get_row_by_cProd(file_path, cProd):
     try:
         df = pd.read_csv(file_path)
 
@@ -30,9 +31,9 @@ def get_row_by_cEAN(file_path, cEAN):
         product_index = None
 
         for row_number in range(0, rows_number):
-            dataframe_cEAN = str(df.loc[row_number, "cEAN"])
+            dataframe_cEAN = str(df.loc[row_number, "cProd"])
 
-            if(dataframe_cEAN == str(cEAN)):        
+            if(dataframe_cEAN == str(cProd)):        
                 product_index = row_number
                 break
 
@@ -70,6 +71,7 @@ def update_row(file_path, product: object):
 
     else:
         new_row = pd.DataFrame({
+            'cProd': [str(product.c_prod)],
             'ours_code': [str(product.ours_code)], 
             'margin': [product.margin], 
             'cEAN': [product.c_ean], 

@@ -11,6 +11,7 @@ from utils.products_price import selling_price
 class Product:
     def __init__(
             self,
+            c_prod: str,
             ours_code: str or None, 
             c_ean: str,
             cost_price: float,
@@ -21,6 +22,7 @@ class Product:
             margin: float,
             old_selling_price: float,
         ):
+        self._c_prod = c_prod
         self._ours_code = ours_code
         self._c_ean = c_ean
         self._cost_price = cost_price
@@ -33,6 +35,10 @@ class Product:
         self._old_selling_price = old_selling_price
         self._sub_item_quantity = None
     
+    @property
+    def c_prod(self):
+        return self._c_prod
+
     @property
     def ours_code(self):
         return self._ours_code
@@ -89,6 +95,10 @@ class Product:
     @new_selling_price.setter
     def new_selling_price(self, value: str):
         self._new_selling_price = value
+
+    @c_ean.setter
+    def c_ean(self, value: str):
+        self._c_ean = value
 
     @sub_item_quantity.setter
     def sub_item_quantity(self, value: str):

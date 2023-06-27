@@ -6,8 +6,6 @@ from colored import fg, attr
 from utils.obj_from_list import find_product_by_ean
 import utils.londrisoft_bot as bot
 import time
-import random
-import sys
 
 def show_products_list():
     for item in products_list:
@@ -47,13 +45,13 @@ products = res['products']
 csv_manipulation.create_csv_if_not_exists(csv_path)
 
 for product in products:
-
     try:
-        product_datas = csv_manipulation.get_row_by_cEAN(csv_path, product['cEAN'])
+        product_datas = csv_manipulation.get_row_by_cProd(csv_path, product['cProd'])
 
         new_product = Product(
+                c_prod = f'#{product["cProd"]}',
                 ours_code = product_datas["ours_code"],
-                c_ean = product['cEAN'],
+                c_ean = product_datas['cEAN'],
                 cost_price= float(product['costPrice']),
                 ncm = product['ncm'],
                 cest = product['cest'],
@@ -72,6 +70,7 @@ for product in products:
         
     except:
         new_product = Product(
+                c_prod = f'#{product["cProd"]}',
                 ours_code = None,
                 c_ean = product['cEAN'],
                 cost_price= float(product['costPrice']),
@@ -94,9 +93,10 @@ while True:
     try:
         print('0 - Change the product margin.')
         print('1 - Insert the quantity for the sub-item.')
-        print('2 - Create, print and update the products that increased')
-        print('3 - Just Create and update the products that increased')
-        print('4 - Just print the products that increased')
+        print('2 - Change the cEAN of the products.')
+        print('3 - Create, print and update the products that increased')
+        print('4 - Just Create and update the products that increased')
+        print('5 - Just print the products that increased')
         print('9 - Show all products ')
         print(30*'=')
 
@@ -127,7 +127,6 @@ while True:
                 raise ValueError("Margin should be a number")
             
             product.margin = new_margin
-
 
             print(f'the new margin of the {product.commercial_name} is {product.margin}')
 
@@ -161,6 +160,29 @@ while True:
                 print(30 * '-')
 
         elif(option == '2'):
+            print('op 2: You will change the cEAN')
+            time.sleep(1)
+
+            for product in products_list:
+                
+                if(product.ours_code != None):
+                    continue
+
+                print(f'the product name is: {colored(product.nfe_name, "blue")}')
+
+                new_c_ean = float(input('Put the new cEAN: '))
+
+                product.c_ean = new_c_ean
+
+                time.sleep(.5)
+
+                print(f'the new CEAN is {colored(product.c_ean, "yellow")}')
+
+                time.sleep(1)
+
+                print(30 * '-')
+
+        elif(option == '3'):
             print('You selected the option 2')
             time.sleep(1)
             bot.update_and_print_products(products_list, 'increase')
@@ -169,7 +191,7 @@ while True:
                 if(float(product.new_selling_price) > float(product.old_selling_price)):
                     csv_manipulation.update_row(csv_path, product)
 
-        elif(option == '3'):
+        elif(option == '4'):
             print('You selected the option 3')
             time.sleep(1)
 
@@ -178,9 +200,40 @@ while True:
             for product in products_list:
                if(float(product.new_selling_price) > float(product.old_selling_price)):
                     csv_manipulation.update_row(csv_path, product)
+      
+        elif(option == '5'):
+            print('You selected the option 4')
+            time.sleep(1)
 
-            
+            bot.just_print_products(products_list, 'increase')
+
+            for product in products_list:
+                if(float(product.new_selling_price) > float(product.old_selling_price)):
+                    csv_manipulation.update_row(csv_path, product)
+
+        elif(option == '9'):
+            show_products_list()
+
+        elif(option == '3'):
+            print('You selected the option 2')
+            time.sleep(1)
+            bot.update_and_print_products(products_list, 'increase')
+
+            for product in products_list:
+                if(float(product.new_selling_price) > float(product.old_selling_price)):
+                    csv_manipulation.update_row(csv_path, product)
+
         elif(option == '4'):
+            print('You selected the option 3')
+            time.sleep(1)
+
+            bot.just_update_products(products_list, 'increase')
+
+            for product in products_list:
+               if(float(product.new_selling_price) > float(product.old_selling_price)):
+                    csv_manipulation.update_row(csv_path, product)
+      
+        elif(option == '5'):
             print('You selected the option 4')
             time.sleep(1)
 
