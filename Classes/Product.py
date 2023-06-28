@@ -34,6 +34,7 @@ class Product:
         self._new_selling_price = selling_price(cost_price, margin)
         self._old_selling_price = old_selling_price
         self._sub_item_quantity = None
+        self._print_product = True
     
     @property
     def c_prod(self):
@@ -83,6 +84,10 @@ class Product:
     def sub_item_quantity(self):
         return self._sub_item_quantity
     
+    @property
+    def print_product(self):
+        return self._print_product
+    
     @margin.setter
     def margin(self, value: float):
         self._margin = value
@@ -110,4 +115,8 @@ class Product:
             self._cost_price,
             self._margin
         )
+    
+    @print_product.setter
+    def print_product(self, value: bool):
+        self._print_product = value
 

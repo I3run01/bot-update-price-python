@@ -54,10 +54,12 @@ def update_product_price(
 
     ls_price = float(content_price_str)
 
-    if(ls_price > product.new_selling_price):
+    if(ls_price >= product.new_selling_price):
         product.new_selling_price = ls_price
 
-        print(product.new_selling_price)
+        product.print_product = False
+
+        print(product.nfe_name)
 
     else:
         new_price_str = str(product.new_selling_price)
@@ -214,7 +216,6 @@ def create_product(product):
     pyautogui.click(300, 100)
 
 def print_labels(our_codes: list):
-
     pyautogui.click(900,520)
     pyautogui.click(250,100)
 
@@ -280,7 +281,10 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
     for product in products:
 
         if(status == 'increase'):
-            if(product.new_selling_price > product.old_selling_price):
+            if(
+                product.new_selling_price > product.old_selling_price 
+                and product.print_product
+            ):
                 our_code_print_list.append(product.ours_code)
         
         else:

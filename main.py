@@ -49,9 +49,9 @@ for product in products:
         product_datas = csv_manipulation.get_row_by_cProd(csv_path, product['cProd'])
 
         new_product = Product(
-                c_prod = f'#{product["cProd"]}',
+                c_prod = f'f{product["cProd"]}',
                 ours_code = product_datas["ours_code"],
-                c_ean = product_datas['cEAN'],
+                c_ean = product_datas['cEAN'][1:],
                 cost_price= float(product['costPrice']),
                 ncm = product['ncm'],
                 cest = product['cest'],
@@ -70,7 +70,7 @@ for product in products:
         
     except:
         new_product = Product(
-                c_prod = f'#{product["cProd"]}',
+                c_prod = f'f{product["cProd"]}',
                 ours_code = None,
                 c_ean = product['cEAN'],
                 cost_price= float(product['costPrice']),

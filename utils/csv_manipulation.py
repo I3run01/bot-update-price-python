@@ -74,7 +74,7 @@ def update_row(file_path, product: object):
             'cProd': [str(product.c_prod)],
             'ours_code': [str(product.ours_code)], 
             'margin': [product.margin], 
-            'cEAN': [product.c_ean], 
+            'cEAN': [f'f{product.c_ean}'], 
             'selling_price': [product.new_selling_price],
             "cost_price": [product.cost_price],
             "ncm": [product.ncm],
