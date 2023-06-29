@@ -24,6 +24,23 @@ def show_products_list():
         print('')
         print(30*'=')
 
+def all_products_have_ours_code_or_cEAN():
+
+    have = True
+    for product in products_list:
+
+        if(have == False):
+            return False
+        
+        if(product.ours_code and product.c_ean):
+            continue
+
+        have = False
+
+    print(have)
+
+    return have
+
 products_list = []
 
 while True:
@@ -183,8 +200,13 @@ while True:
                 print(30 * '-')
 
         elif(option == '3'):
-            print('You selected the option 2')
+            print('You selected the option 3')
+
             time.sleep(1)
+
+            if(all_products_have_ours_code_or_cEAN() != True):
+                raise ValueError("All Products should cEAN or Ours code")
+
             bot.update_and_print_products(products_list, 'increase')
 
             for product in products_list:
@@ -192,8 +214,12 @@ while True:
                     csv_manipulation.update_row(csv_path, product)
 
         elif(option == '4'):
-            print('You selected the option 3')
+            print('You selected the option 4')
             time.sleep(1)
+
+            
+            if(all_products_have_ours_code_or_cEAN() == False):
+                raise ValueError("All Products should cEAN or Ours code")
 
             bot.just_update_products(products_list, 'increase')
 
@@ -202,9 +228,12 @@ while True:
                     csv_manipulation.update_row(csv_path, product)
       
         elif(option == '5'):
-            print('You selected the option 4')
+            print('You selected the option 5')
             time.sleep(1)
 
+            if(all_products_have_ours_code_or_cEAN() == False):
+                raise ValueError("All Products should cEAN or Ours code")
+            
             bot.just_print_products(products_list, 'increase')
 
             for product in products_list:

@@ -13,7 +13,7 @@ class Product:
             self,
             c_prod: str,
             ours_code: str or None, 
-            c_ean: str,
+            c_ean: str or None,
             cost_price: float,
             ncm: str,
             cest: str or None,

@@ -29,9 +29,10 @@ def update_product_price(
         product: object,
         status: Union[Literal['increase'], Literal['any']]
 ):
-    pyautogui.tripleClick(450, 200)
+    # TODO: check if will work
+    pyautogui.tripleClick(200, 200)
 
-    pyautogui.write(product.c_ean)
+    pyautogui.write(product.ours_code)
 
     pyautogui.press('Enter')
 
@@ -75,6 +76,9 @@ def update_product_price(
 def has_product_in_LS(product):
     if(product.ours_code):
         return True
+    
+    if(product.ours_code == None and product.c_ean == None):
+         raise ValueError(f"The Product {product.nfe_name} has no cEAN and Ours code")
 
     pyautogui.press('esc')
     pyautogui.click(200,460)
