@@ -114,7 +114,7 @@ while True:
         print('3 - Create, print and update the products that increased')
         print('4 - Just Create and update the products that increased')
         print('5 - Just print the products that increased')
-        print('9 - Show all products ')
+        print('9 - Show all products')
         print(30*'=')
 
         print('')
@@ -128,7 +128,7 @@ while True:
         if(option == '0'):
             print(30*'=')
 
-            print('You selected the option 0')
+            print('OP: 0. Change the product margin.')
             time.sleep(0.5)
 
             product_cEAN = str(input(f'To change the margin, first put the product {colored("cEAN", "yellow")}: '))
@@ -154,7 +154,7 @@ while True:
             print(30*'=')
 
         elif(option == '1'):
-            print('You selected the option 1')
+            print('OP: 1. Insert the quantity for the sub-item.')
             time.sleep(1)
 
             for product in products_list:
@@ -177,7 +177,7 @@ while True:
                 print(30 * '-')
 
         elif(option == '2'):
-            print('op 2: You will change the cEAN')
+            print('OP 2: You will change the cEAN')
             time.sleep(1)
 
             for product in products_list:
@@ -200,7 +200,7 @@ while True:
                 print(30 * '-')
 
         elif(option == '3'):
-            print('You selected the option 3')
+            print('OP: 3. Create, print and update the products that increased')
 
             time.sleep(1)
 
@@ -214,7 +214,7 @@ while True:
                     csv_manipulation.update_row(csv_path, product)
 
         elif(option == '4'):
-            print('You selected the option 4')
+            print('OP: 4. Just Create and update the products that increased')
             time.sleep(1)
 
             
@@ -228,7 +228,7 @@ while True:
                     csv_manipulation.update_row(csv_path, product)
       
         elif(option == '5'):
-            print('You selected the option 5')
+            print('OP. 5. Just print the products that increased')
             time.sleep(1)
 
             if(all_products_have_ours_code_or_cEAN() == False):
