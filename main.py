@@ -22,22 +22,24 @@ def show_products_list():
         print(f'Margin (%): {fg(margin_color)}{item.margin}{attr(0)}')
         print(f'Price (R$): {colored(item.old_selling_price, "red")} -> {colored(item.new_selling_price, "green")}')
         print('')
+        
+        if(item.ours_code == None and item.c_ean == None):
+            print(f'this product has no {colored("cEAN", "red")} and no {colored("Ours_code", "red")}')
+            print('')
+
         print(30*'=')
 
 def all_products_have_ours_code_or_cEAN():
 
     have = True
     for product in products_list:
-
         if(have == False):
             return False
         
-        if(product.ours_code and product.c_ean):
+        if(product.ours_code or product.c_ean):
             continue
 
         have = False
-
-    print(have)
 
     return have
 
@@ -114,6 +116,7 @@ while True:
         print('3 - Create, print and update the products that increased')
         print('4 - Just Create and update the products that increased')
         print('5 - Just print the products that increased')
+        print('8 - To put ours_code')
         print('9 - Show all products')
         print(30*'=')
 
@@ -126,32 +129,30 @@ while True:
             continue
 
         if(option == '0'):
-            print(30*'=')
-
-            print('OP: 0. Change the product margin.')
-            time.sleep(0.5)
-
-            product_cEAN = str(input(f'To change the margin, first put the product {colored("cEAN", "yellow")}: '))
-
-            product = find_product_by_ean(products_list, product_cEAN)
-
-            if product is None:
-                raise ValueError("Product not found")
-            
-            try:
-                new_margin = float(input('put the product margin, *NOT decimal*: '))
-            except:
-                raise ValueError("Margin should be a number")
-            
-            product.margin = new_margin
-
-            print(f'the new margin of the {product.commercial_name} is {product.margin}')
-
+            print('OP 0: Change producs margin')
             time.sleep(1)
 
-            show_products_list()
+            for product in products_list:
+                
+                if(product.ours_code != None):
+                    continue
 
-            print(30*'=')
+                print(f'the product name is: {colored(product.nfe_name, "blue")}')
+
+                new_margin = str(input('Put the new margin or Just press enter to ignore: '))
+
+                if(new_margin == ''):
+                    continue
+
+                product.margin = float(new_margin)
+
+                time.sleep(.5)
+
+                print(f'the new Margin {colored(product.margin, "yellow")}')
+
+                time.sleep(1)
+
+                print(30 * '-')
 
         elif(option == '1'):
             print('OP: 1. Insert the quantity for the sub-item.')
@@ -164,7 +165,10 @@ while True:
 
                 print(f'the product name is: {colored(product.nfe_name, "blue")}')
 
-                sub_item_quantity = float(input('Put the quantity of the sub-item: '))
+                sub_item_quantity = float(input('Put the quantity of the sub-item or Press Enter to ignore: '))
+
+                if(sub_item_quantity == ''):
+                    continue
 
                 product.sub_item_quantity = sub_item_quantity
 
@@ -187,7 +191,10 @@ while True:
 
                 print(f'the product name is: {colored(product.nfe_name, "blue")}')
 
-                new_c_ean = float(input('Put the new cEAN: '))
+                new_c_ean = str(input('Put the new cEAN or press enter to ignore: '))
+
+                if(new_c_ean == ''):
+                    continue
 
                 product.c_ean = new_c_ean
 
@@ -239,6 +246,32 @@ while True:
             for product in products_list:
                 if(float(product.new_selling_price) > float(product.old_selling_price)):
                     csv_manipulation.update_row(csv_path, product)
+
+        elif(option == '8'):
+            print('OP 8: Change ours code')
+            time.sleep(1)
+
+            for product in products_list:
+                
+                if(product.ours_code != None):
+                    continue
+
+                print(f'the product name is: {colored(product.nfe_name, "blue")}')
+
+                new_ours_code = str(input('Put the new Ours code or JUST press enter to ignore: '))
+
+                if(new_ours_code == ''):
+                    continue
+
+                product.ours_code = new_ours_code
+
+                time.sleep(.5)
+
+                print(f'the new Ours_code is {colored(product.ours_code, "yellow")}')
+
+                time.sleep(1)
+
+                print(30 * '-')
 
         elif(option == '9'):
             show_products_list()
