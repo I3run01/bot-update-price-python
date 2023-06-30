@@ -59,7 +59,7 @@ def update_row(file_path, product: object):
 
     for row_number in range(0, rows_number):
         dataframe_ours_code = str(df.loc[row_number, "ours_code"])
-        product_ours_code = str(product.ours_code)
+        product_ours_code = str(f'f{product.ours_code}')
 
         if(dataframe_ours_code == product_ours_code):        
             product_index = row_number
@@ -72,7 +72,7 @@ def update_row(file_path, product: object):
     else:
         new_row = pd.DataFrame({
             'cProd': [str(product.c_prod)],
-            'ours_code': [str(product.ours_code)], 
+            'ours_code': [f'f{str(product.ours_code)}'], 
             'margin': [product.margin], 
             'cEAN': [f'f{product.c_ean}'], 
             'selling_price': [product.new_selling_price],

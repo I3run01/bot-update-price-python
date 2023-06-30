@@ -72,7 +72,7 @@ for product in products:
        
         new_product = Product(
                 c_prod = f'f{product["cProd"]}',
-                ours_code = product_datas["ours_code"],
+                ours_code = product_datas["ours_code"][1:],
                 c_ean = product_datas['cEAN'][1:],
                 cost_price= float(product['costPrice']),
                 ncm = product['ncm'],
