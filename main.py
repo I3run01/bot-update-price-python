@@ -65,8 +65,11 @@ csv_manipulation.create_csv_if_not_exists(csv_path)
 
 for product in products:
     try:
-        product_datas = csv_manipulation.get_row_by_cProd(csv_path, product['cProd'])
-
+        product_datas = csv_manipulation.get_row_by_cProd(
+            csv_path, 
+            f'f{product["cProd"]}'
+        )
+       
         new_product = Product(
                 c_prod = f'f{product["cProd"]}',
                 ours_code = product_datas["ours_code"],
