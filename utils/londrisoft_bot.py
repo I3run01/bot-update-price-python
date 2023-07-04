@@ -87,7 +87,7 @@ def has_product_in_LS(product):
 
     pyperclip.copy('')
 
-    pyautogui.doubleClick(40,310)
+    pyautogui.doubleClick(29,310)
 
     pyautogui.hotkey('ctrl', 'c')
 
