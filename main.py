@@ -103,7 +103,15 @@ for product in products:
                 margin=50,
                 old_selling_price = 0,
             )
-
+        
+        if(
+            new_product.c_ean[0] == '0' and
+            new_product.c_ean[1] == '0' and
+            new_product.c_ean[2] == '0' and
+            new_product.c_ean[3] == '0' 
+        ):
+            new_product.c_ean = str(int(new_product.c_ean))
+ 
         products_list.append(new_product)
 
 show_products_list()
@@ -167,13 +175,13 @@ while True:
                     continue
 
                 print(f'the product name is: {colored(product.nfe_name, "blue")}')
-
-                sub_item_quantity = float(input('Put the quantity of the sub-item or Press Enter to ignore: '))
+                
+                sub_item_quantity = input('Put the quantity of the sub-item or Press Enter to ignore: ')
 
                 if(sub_item_quantity == ''):
                     continue
 
-                product.sub_item_quantity = sub_item_quantity
+                product.sub_item_quantity = float(sub_item_quantity)
 
                 time.sleep(.5)
 
