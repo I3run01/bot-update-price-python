@@ -4,6 +4,12 @@ import pyautogui
 import time
 from datetime import datetime
 
+current_date = datetime.now()
+
+current_day = current_date.day
+current_month = current_date.month
+current_year = current_date.year
+
 pyautogui.PAUSE = 1.8
 
 def open_gestor():
@@ -29,7 +35,8 @@ def update_product_price(
         product: object,
         status: Union[Literal['increase'], Literal['any']]
 ):
-    # TODO: check if will work
+    code_verifification = str(current_day) + str(current_month) + str(current_year)
+
     pyautogui.tripleClick(200, 200)
 
     pyautogui.write(product.ours_code)
@@ -55,7 +62,10 @@ def update_product_price(
 
     ls_price = float(content_price_str)
 
-    if(ls_price >= product.new_selling_price):
+    if(
+        ls_price >= product.new_selling_price and
+        product.ours_code[0: len(code_verifification) != str(code_verifification)]
+    ):
         product.new_selling_price = ls_price
 
         product.print_product = False
@@ -110,16 +120,12 @@ def has_product_in_LS(product):
 
     return True
 
+
+#TODO: verify
 def create_product(product):
 
     attempts = 0
     while True:
-
-        current_date = datetime.now()
-
-        current_day = current_date.day
-        current_month = current_date.month
-        current_year = current_date.year
 
         unique_code = str(current_day) + str(current_month) + str(current_year) + str(attempts)
 
