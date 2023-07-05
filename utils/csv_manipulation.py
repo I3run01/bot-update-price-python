@@ -31,9 +31,9 @@ def get_row_by_cProd(file_path, cProd):
         product_index = None
 
         for row_number in range(0, rows_number):
-            dataframe_cEAN = str(df.loc[row_number, "cProd"])
+            dataframe_cProd = str(df.loc[row_number, "cProd"])
 
-            if(dataframe_cEAN == str(cProd)):        
+            if(dataframe_cProd == str(cProd)):        
                 product_index = row_number
                 break
 

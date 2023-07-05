@@ -83,9 +83,8 @@ for product in products:
                 old_selling_price = product_datas["selling_price"],
             )
         
-        if(product_datas["sub_itens_quantity"]):
+        if(str(product_datas["sub_itens_quantity"]) != 'nan'):
             product_datas_sub_itens_quantity = product_datas["sub_itens_quantity"]
-
             new_product.sub_item_quantity = float(product_datas_sub_itens_quantity)
 
         products_list.append(new_product)
