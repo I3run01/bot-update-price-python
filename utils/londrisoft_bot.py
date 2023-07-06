@@ -62,15 +62,11 @@ def update_product_price(
 
     ls_price = float(content_price_str)
 
-    if(
-        ls_price >= product.new_selling_price and
-        product.ours_code[0: len(code_verifification) != str(code_verifification)]
-    ):
+    isProductCreatedToday = product.ours_code[0: len(str(code_verifification))] == str(code_verifification)
+
+    if(ls_price >= product.new_selling_price):
         product.new_selling_price = ls_price
-
         product.print_product = False
-
-        print(product.nfe_name)
 
     else:
         new_price_str = str(product.new_selling_price)
@@ -80,6 +76,9 @@ def update_product_price(
         pyautogui.write(new_price)
 
         pyautogui.press('Enter')
+
+    if(isProductCreatedToday):
+        product.print_product = True
 
     pyautogui.click(300, 100)
 
@@ -120,8 +119,6 @@ def has_product_in_LS(product):
 
     return True
 
-
-#TODO: verify
 def create_product(product):
 
     attempts = 0
@@ -257,6 +254,7 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
         if(status == 'increase'):
 
             if(product.old_selling_price > product.new_selling_price and product.ours_code):
+                product.print_product = False
                 continue
 
             has_product_internally = has_product_in_LS(product)
@@ -288,16 +286,9 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
     our_code_print_list = []
     for product in products:
-
-        if(status == 'increase'):
-            if(
-                product.new_selling_price > product.old_selling_price 
-                and product.print_product
-            ):
-                our_code_print_list.append(product.ours_code)
+        if(product.print_product):
+            our_code_print_list.append(product.ours_code)
         
-        else:
-           our_code_print_list.append(product.ours_code) 
 
     print_labels(our_code_print_list)
 
