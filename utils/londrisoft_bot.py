@@ -10,7 +10,12 @@ current_day = current_date.day
 current_month = current_date.month
 current_year = current_date.year
 
+code_verifification = str(current_day) + str(current_month) + str(current_year)
+
 pyautogui.PAUSE = 1.8
+
+def is_product_created_today(our_code):
+    return our_code[0: len(str(code_verifification))] == str(code_verifification)
 
 def open_gestor():
 
@@ -35,7 +40,6 @@ def update_product_price(
         product: object,
         status: Union[Literal['increase'], Literal['any']]
 ):
-    code_verifification = str(current_day) + str(current_month) + str(current_year)
 
     pyautogui.tripleClick(200, 200)
 
@@ -62,7 +66,7 @@ def update_product_price(
 
     ls_price = float(content_price_str)
 
-    isProductCreatedToday = product.ours_code[0: len(str(code_verifification))] == str(code_verifification)
+    isProductCreatedToday = is_product_created_today(product.ours_code)
 
     if(ls_price >= product.new_selling_price):
         product.new_selling_price = ls_price
@@ -119,9 +123,7 @@ def has_product_in_LS(product):
 
     return True
 
-def create_product(product):
-
-    attempts = 0
+def create_product(product, attempts = 0):
     while True:
 
         unique_code = str(current_day) + str(current_month) + str(current_year) + str(attempts)
@@ -249,12 +251,15 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
     pyautogui.click(200,650)
     pyautogui.click(200,360)
 
+    attempts = 0
     for product in products:
 
         if(status == 'increase'):
 
             if(product.old_selling_price > product.new_selling_price and product.ours_code):
-                product.print_product = False
+                if(is_product_created_today(product.ours_code) == False):
+                    product.print_product = False
+
                 continue
 
             has_product_internally = has_product_in_LS(product)
@@ -263,7 +268,8 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
                 update_product_price(product, status)
 
             else:
-                create_product(product)
+                create_product(product, attempts)
+                attempts = attempts + 1
         
         else: 
             has_product_internally = has_product_in_LS(product)
@@ -273,6 +279,7 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
             else:
                 create_product(product)
+                attempts = attempts + 1
                 
     pyautogui.press('esc')
 

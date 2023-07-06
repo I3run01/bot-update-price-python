@@ -58,10 +58,10 @@ def update_row(file_path, product: object):
     product_index = None
 
     for row_number in range(0, rows_number):
-        dataframe_ours_code = str(df.loc[row_number, "ours_code"])
-        product_ours_code = str(f'f{product.ours_code}')
+        dataframe_cProd = str(df.loc[row_number, "cProd"])
+        product_cProd = str(f'f{product.c_prod}')
 
-        if(dataframe_ours_code == product_ours_code):        
+        if(dataframe_cProd == product_cProd):        
             product_index = row_number
             break
     
