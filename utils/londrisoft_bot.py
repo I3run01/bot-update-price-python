@@ -123,6 +123,37 @@ def has_product_in_LS(product):
 
     return True
 
+def has_product_in_LS_v2(product):
+    if(product.ours_code):
+        return True
+    
+    if(product.ours_code == None and product.c_ean == None):
+         raise ValueError(f"The Product {product.nfe_name} has no cEAN and Ours code")
+
+    #TODO: check the coordenate
+    pyperclip.copy('')
+    pyautogui.tripleClick(500, 100)
+
+    pyautogui.press('Enter')
+    pyautogui.hotkey('ctrl', 'c')
+    pyautogui.press('Enter')
+    copied_text = pyperclip.paste().strip()
+
+    if(len(copied_text) < 15):
+        return False
+    
+    pyautogui.press('Enter')
+    pyautogui.tripleClick(250, 100)
+
+    pyautogui.hotkey('ctrl', 'x')
+    product_code = pyperclip.paste().strip()
+    pyautogui.hotkey('ctrl', 'z')
+
+    product.ours_code = product_code
+
+    return True
+
+
 def create_product(product, attempts = 0):
     while True:
 
