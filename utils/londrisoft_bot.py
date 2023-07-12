@@ -86,6 +86,43 @@ def update_product_price(
 
     pyautogui.click(300, 100)
 
+# def has_product_in_LS(product):
+#     if(product.ours_code):
+#         return True
+    
+#     if(product.ours_code == None and product.c_ean == None):
+#          raise ValueError(f"The Product {product.nfe_name} has no cEAN and Ours code")
+
+#     pyautogui.press('esc')
+#     pyautogui.click(200,460)
+#     pyautogui.write(product.c_ean)
+#     pyautogui.press('Enter')
+
+#     pyperclip.copy('')
+
+#     pyautogui.doubleClick(29,310)
+
+#     pyautogui.hotkey('ctrl', 'c')
+
+#     text = pyperclip.paste().strip()
+
+#     pyautogui.press('Enter')
+
+#     pyautogui.press('esc')
+
+#     pyautogui.press('Tab')
+
+#     pyautogui.press('Enter')
+
+#     pyautogui.click(200,360)
+
+#     if(len(text) > 30):
+#         return False
+
+#     product.ours_code = text
+
+#     return True
+
 def has_product_in_LS(product):
     if(product.ours_code):
         return True
@@ -93,47 +130,12 @@ def has_product_in_LS(product):
     if(product.ours_code == None and product.c_ean == None):
          raise ValueError(f"The Product {product.nfe_name} has no cEAN and Ours code")
 
-    pyautogui.press('esc')
-    pyautogui.click(200,460)
+    pyperclip.copy('')
+
+    pyautogui.tripleClick(600, 200)
     pyautogui.write(product.c_ean)
     pyautogui.press('Enter')
 
-    pyperclip.copy('')
-
-    pyautogui.doubleClick(29,310)
-
-    pyautogui.hotkey('ctrl', 'c')
-
-    text = pyperclip.paste().strip()
-
-    pyautogui.press('Enter')
-
-    pyautogui.press('esc')
-
-    pyautogui.press('Tab')
-
-    pyautogui.press('Enter')
-
-    pyautogui.click(200,360)
-
-    if(len(text) > 30):
-        return False
-
-    product.ours_code = text
-
-    return True
-
-def has_product_in_LS_v2(product):
-    if(product.ours_code):
-        return True
-    
-    if(product.ours_code == None and product.c_ean == None):
-         raise ValueError(f"The Product {product.nfe_name} has no cEAN and Ours code")
-
-    pyperclip.copy('')
-    pyautogui.tripleClick(500, 100)
-
-    pyautogui.press('Enter')
     pyautogui.hotkey('ctrl', 'c')
     pyautogui.press('Enter')
     copied_text = pyperclip.paste().strip()
@@ -141,7 +143,7 @@ def has_product_in_LS_v2(product):
     if(len(copied_text) < 15):
         return False
     
-    pyautogui.tripleClick(250, 100)
+    pyautogui.tripleClick(100, 200)
 
     pyautogui.hotkey('ctrl', 'x')
     product_code = pyperclip.paste().strip()
@@ -150,7 +152,6 @@ def has_product_in_LS_v2(product):
     product.ours_code = product_code
 
     return True
-
 
 def create_product(product, attempts = 0):
     while True:
