@@ -130,7 +130,6 @@ def has_product_in_LS_v2(product):
     if(product.ours_code == None and product.c_ean == None):
          raise ValueError(f"The Product {product.nfe_name} has no cEAN and Ours code")
 
-    #TODO: check the coordenate
     pyperclip.copy('')
     pyautogui.tripleClick(500, 100)
 
@@ -142,7 +141,6 @@ def has_product_in_LS_v2(product):
     if(len(copied_text) < 15):
         return False
     
-    pyautogui.press('Enter')
     pyautogui.tripleClick(250, 100)
 
     pyautogui.hotkey('ctrl', 'x')
