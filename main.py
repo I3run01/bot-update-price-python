@@ -8,6 +8,9 @@ import utils.londrisoft_bot as bot
 import time
 
 def show_products_list():
+    all_products_have_code = True
+    None_of_the_products_had_price_increased = True
+
     for item in products_list:
 
         margin_color = 'blue' if float(item.margin) != 50 else 'white'
@@ -28,6 +31,16 @@ def show_products_list():
             print('')
 
         print(30*'=')
+
+        if(item.ours_code == None):
+            all_products_have_code = False
+        
+        if(item.new_selling_price > item.old_selling_price):
+            None_of_the_products_had_price_increased = False
+
+    if(all_products_have_code and None_of_the_products_had_price_increased):
+        text = "None of the products needs to be updated".upper()
+        print(f'{colored(text, "yellow")}')
 
 def all_products_have_ours_code_or_cEAN():
 
