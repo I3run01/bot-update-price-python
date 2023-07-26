@@ -86,43 +86,6 @@ def update_product_price(
 
     pyautogui.click(300, 100)
 
-# def has_product_in_LS(product):
-#     if(product.ours_code):
-#         return True
-    
-#     if(product.ours_code == None and product.c_ean == None):
-#          raise ValueError(f"The Product {product.nfe_name} has no cEAN and Ours code")
-
-#     pyautogui.press('esc')
-#     pyautogui.click(200,460)
-#     pyautogui.write(product.c_ean)
-#     pyautogui.press('Enter')
-
-#     pyperclip.copy('')
-
-#     pyautogui.doubleClick(29,310)
-
-#     pyautogui.hotkey('ctrl', 'c')
-
-#     text = pyperclip.paste().strip()
-
-#     pyautogui.press('Enter')
-
-#     pyautogui.press('esc')
-
-#     pyautogui.press('Tab')
-
-#     pyautogui.press('Enter')
-
-#     pyautogui.click(200,360)
-
-#     if(len(text) > 30):
-#         return False
-
-#     product.ours_code = text
-
-#     return True
-
 def has_product_in_LS(product):
     if(product.ours_code):
         return True
@@ -317,9 +280,7 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
     pyautogui.press('Enter')
 
-    pyautogui.click(750, 27)
-
-    pyautogui.click(750, 27)
+    pyautogui.click(100, 330)
 
     our_code_print_list = []
     for product in products:
