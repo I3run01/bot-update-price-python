@@ -93,7 +93,7 @@ for product in products:
                 commercial_name = product['comercialName'],
                 nfe_name= product['nfeName'],
                 margin=product_datas["margin"],
-                old_selling_price = product_datas["selling_price"],
+                old_selling_price = float(product_datas["selling_price"]),
             )
         
         if(str(product_datas["sub_itens_quantity"]) != 'nan'):
