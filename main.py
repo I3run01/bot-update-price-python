@@ -40,7 +40,7 @@ def show_products_list():
 
     if(all_products_have_code and None_of_the_products_had_price_increased):
         text = "None of the products needs to be updated".upper()
-        print(f'{colored(text, "yellow")}')
+        print(f'{colored(text, "green")}')
 
 def all_products_have_ours_code_or_cEAN():
 
