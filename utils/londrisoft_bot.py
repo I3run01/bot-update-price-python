@@ -159,7 +159,12 @@ def create_product(product, attempts = 0):
         pyperclip.copy(product.nfe_name)
 
     pyautogui.hotkey('ctrl', 'v')
-    
+
+    pyautogui.press('Enter')
+
+    #TODO:check this part
+    pyautogui.press('right')
+
     pyautogui.press('Enter')
 
     pyautogui.click(400, 662)
