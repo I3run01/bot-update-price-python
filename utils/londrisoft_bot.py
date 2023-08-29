@@ -261,7 +261,6 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
     pyautogui.click(200,650)
     pyautogui.click(200,360)
 
-    #TODO: check if continue is working
     #TODO: if random_num works, attempts lines should be deleted
     # attempts = 0
     for product in products:
