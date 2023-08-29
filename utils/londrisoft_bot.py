@@ -13,17 +13,20 @@ current_year = current_date.year
 
 code_verifification = str(current_day) + str(current_month) + str(current_year)
 
+random_num_list = []
+
 pyautogui.PAUSE = 1.8
 
 def is_product_created_today(our_code):
     return our_code[0: len(str(code_verifification))] == str(code_verifification)
 
 def unique_randoms():
-    numbers = list(range(100))  # create a list of numbers from 0 to 99
-    random.shuffle(numbers)    # shuffle the list
-
-    for num in numbers:
-        yield num
+    while True:
+        random_number = random.randint(0, 99)
+        
+        if random_number not in random_num_list:
+            random_num_list.append(random_number)
+            return random_number
 
 def open_gestor():
 
