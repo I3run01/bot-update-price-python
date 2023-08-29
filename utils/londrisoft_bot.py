@@ -261,17 +261,27 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
     pyautogui.click(200,650)
     pyautogui.click(200,360)
 
+    #TODO: check if continue is working
     #TODO: if random_num works, attempts lines should be deleted
     # attempts = 0
     for product in products:
 
+        if(
+            status == 'increase' and 
+            product.old_selling_price > product.new_selling_price and 
+            product.ours_code
+        ):    
+            continue
+
+
         if(status == 'increase'):
 
-            if(product.old_selling_price > product.new_selling_price and product.ours_code):
-                if(is_product_created_today(product.ours_code) == False):
-                    product.print_product = False
-
-                continue
+            if(
+                product.old_selling_price > product.new_selling_price and 
+                product.ours_code and
+                is_product_created_today(product.ours_code) == False
+            ):
+                product.print_product = False
 
             has_product_internally = has_product_in_LS(product)
            
