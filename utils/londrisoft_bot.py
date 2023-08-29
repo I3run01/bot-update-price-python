@@ -162,7 +162,6 @@ def create_product(product, attempts = 0):
 
     pyautogui.press('Enter')
 
-    #TODO:check this part
     pyautogui.press('right')
 
     pyautogui.press('Enter')
