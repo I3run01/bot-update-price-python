@@ -3,6 +3,7 @@ import pyperclip
 import pyautogui
 import time
 from datetime import datetime
+import random
 
 current_date = datetime.now()
 
@@ -16,6 +17,13 @@ pyautogui.PAUSE = 1.8
 
 def is_product_created_today(our_code):
     return our_code[0: len(str(code_verifification))] == str(code_verifification)
+
+def unique_randoms():
+    numbers = list(range(100))  # create a list of numbers from 0 to 99
+    random.shuffle(numbers)    # shuffle the list
+
+    for num in numbers:
+        yield num
 
 def open_gestor():
 
@@ -116,10 +124,15 @@ def has_product_in_LS(product):
 
     return True
 
+#TODO: if uniques randons works, erase attempts lines
 def create_product(product, attempts = 0):
     while True:
 
-        unique_code = str(current_day) + str(current_month) + str(current_year) + str(attempts)
+        unique_code = str(current_day) + str(current_month) + str(current_year)
+
+        # unique_code += str(attempts)
+
+        unique_code += str(unique_randoms())
 
         pyautogui.click(250, 100)
 
@@ -248,7 +261,8 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
     pyautogui.click(200,650)
     pyautogui.click(200,360)
 
-    attempts = 0
+    #TODO: if random_num works, attempts lines should be deleted
+    # attempts = 0
     for product in products:
 
         if(status == 'increase'):
@@ -265,8 +279,8 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
                 update_product_price(product, status)
 
             else:
-                create_product(product, attempts)
-                attempts = attempts + 1
+                create_product(product)
+                # attempts = attempts + 1
         
         else: 
             has_product_internally = has_product_in_LS(product)
@@ -276,7 +290,7 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
             else:
                 create_product(product)
-                attempts = attempts + 1
+                # attempts = attempts + 1
                 
     pyautogui.press('esc')
 
