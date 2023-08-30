@@ -127,7 +127,7 @@ def has_product_in_LS(product):
 
     return True
 
-def create_product(product, attempts = 0):
+def create_product(product):
     while True:
 
         unique_code = str(current_day) + str(current_month) + str(current_year)
@@ -154,8 +154,6 @@ def create_product(product, attempts = 0):
         else:
             product.ours_code = unique_code
             break
-
-        attempts = attempts + 1
 
     pyautogui.click(400, 200)
 
