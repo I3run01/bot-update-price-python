@@ -286,7 +286,6 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
             else:
                 create_product(product)
-                # attempts = attempts + 1
         
         else: 
             has_product_internally = has_product_in_LS(product)
