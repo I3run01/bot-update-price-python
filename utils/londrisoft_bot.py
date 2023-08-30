@@ -127,13 +127,10 @@ def has_product_in_LS(product):
 
     return True
 
-#TODO: if uniques randons works, erase attempts lines
 def create_product(product, attempts = 0):
     while True:
 
         unique_code = str(current_day) + str(current_month) + str(current_year)
-
-        # unique_code += str(attempts)
 
         unique_code += str(unique_randoms())
 
@@ -263,9 +260,6 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
     pyautogui.click(200,650)
     pyautogui.click(200,360)
-
-    #TODO: if random_num works, attempts lines should be deleted
-    # attempts = 0
     for product in products:
 
         if(
@@ -302,7 +296,6 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
             else:
                 create_product(product)
-                # attempts = attempts + 1
                 
     pyautogui.press('esc')
 
