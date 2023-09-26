@@ -7,6 +7,8 @@ from utils.obj_from_list import find_product_by_ean
 import utils.londrisoft_bot as bot
 import time
 
+products_list = []
+
 def show_products_list():
     all_products_have_code = True
     None_of_the_products_had_price_increased = True
@@ -55,8 +57,6 @@ def all_products_have_ours_code_or_cEAN():
         have = False
 
     return have
-
-products_list = []
 
 while True:
     try:
@@ -232,6 +232,11 @@ while True:
         elif(option == '3'):
             print('OP: 3. Create, print and update the products that increased')
 
+            #TODO: check this line, if its works
+            if(new_product.old_selling_price > new_product.new_selling_price):
+                new_product.new_selling_price = new_product.old_selling_price
+                new_product.print_product = False
+
             time.sleep(1)
 
             if(all_products_have_ours_code_or_cEAN() != True):
@@ -244,6 +249,11 @@ while True:
                     csv_manipulation.update_row(csv_path, product)
 
         elif(option == '4'):
+            #TODO: check this line, if its works
+            if(new_product.old_selling_price > new_product.new_selling_price):
+                new_product.new_selling_price = new_product.old_selling_price
+                new_product.print_product = False
+
             print('OP: 4. Just Create and update the products that increased')
             time.sleep(1)
 
