@@ -232,11 +232,6 @@ while True:
         elif(option == '3'):
             print('OP: 3. Create, print and update the products that increased')
 
-            #TODO: check this line, if its works
-            if(new_product.old_selling_price >= new_product.new_selling_price):
-                new_product.new_selling_price = new_product.old_selling_price
-                new_product.print_product = False
-
             time.sleep(1)
 
             if(all_products_have_ours_code_or_cEAN() != True):
@@ -249,11 +244,6 @@ while True:
                     csv_manipulation.update_row(csv_path, product)
 
         elif(option == '4'):
-            #TODO: check this line, if its works
-            if(new_product.old_selling_price > new_product.new_selling_price):
-                new_product.new_selling_price = new_product.old_selling_price
-                new_product.print_product = False
-
             print('OP: 4. Just Create and update the products that increased')
             time.sleep(1)
 

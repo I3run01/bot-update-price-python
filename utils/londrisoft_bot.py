@@ -258,41 +258,25 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
     pyautogui.click(200,650)
     pyautogui.click(200,360)
+    
     for product in products:
 
         if(
             status == 'increase' and 
-            product.old_selling_price > product.new_selling_price and 
-            product.ours_code
+            product.old_selling_price >= product.new_selling_price and 
+            product.ours_code and
+            is_product_created_today(product.ours_code) == False
         ):    
+            product.print_product = False
             continue
 
-
-        if(status == 'increase'):
-
-            if(
-                product.old_selling_price > product.new_selling_price and 
-                product.ours_code and
-                is_product_created_today(product.ours_code) == False
-            ):
-                product.print_product = False
-
-            has_product_internally = has_product_in_LS(product)
-           
-            if(has_product_internally):
-                update_product_price(product, status)
-
-            else:
-                create_product(product)
+        has_product_internally = has_product_in_LS(product)
         
-        else: 
-            has_product_internally = has_product_in_LS(product)
-           
-            if(has_product_internally):
-                update_product_price(product, status)
+        if(has_product_internally):
+            update_product_price(product, status)
 
-            else:
-                create_product(product)
+        else:
+            create_product(product)  
                 
     pyautogui.press('esc')
 
