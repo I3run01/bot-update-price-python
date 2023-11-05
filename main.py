@@ -139,6 +139,7 @@ while True:
         print('3 - Create, print and update the products that increased')
         print('4 - Just Create and update the products that increased')
         print('5 - Just print the products that increased')
+        print('6 - Change all the product price')
         print('8 - To put ours_code')
         print('9 - Show all products')
         print(30*'=')
@@ -269,6 +270,28 @@ while True:
             for product in products_list:
                 if(float(product.new_selling_price) > float(product.old_selling_price)):
                     csv_manipulation.update_row(csv_path, product)
+
+        elif(option == '6'):
+            print('OP. 6. You will change the selling price of all products')
+
+            time.sleep(1)
+
+            for product in products_list:
+
+                print(f'the product name is: {colored(product.nfe_name, "blue")}')
+
+                new_product_price = str(input('Put the new price or press enter to ignore: '))
+
+                if(new_product_price == ''):
+                    continue
+
+                product.new_selling_price = float(new_product_price)
+
+                print(f'the new Product Price is {colored(product.new_selling_price, "yellow")}')
+
+                time.sleep(1)
+
+                print(30 * '-')
 
         elif(option == '8'):
             print('OP 8: Change ours code')

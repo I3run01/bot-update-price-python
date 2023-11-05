@@ -101,6 +101,8 @@ class Product:
     def new_selling_price(self, value: str):
         self._new_selling_price = value
 
+        # self.margin = ((self.new_selling_price/self.cost_price) - 1)*100 
+
     @c_ean.setter
     def c_ean(self, value: str):
         self._c_ean = value
@@ -119,4 +121,5 @@ class Product:
     @print_product.setter
     def print_product(self, value: bool):
         self._print_product = value
+        
 

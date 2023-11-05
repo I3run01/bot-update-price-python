@@ -1,7 +1,11 @@
 def selling_price(
         cost_price: float,
         margin: float,
+        selling_price: None or float = None
     ):
+
+    if(selling_price):
+        return selling_price
 
     selling_price = round(cost_price * (1 + (margin/100)), 2)
 
