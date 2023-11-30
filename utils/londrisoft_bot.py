@@ -130,7 +130,7 @@ def has_product_in_LS(product):
 def create_product(product):
     while True:
 
-        unique_code = str(current_day) + str(current_month) + str(current_year)
+        unique_code = str(current_day) + str(current_month) + str(current_year)[-2:]
 
         unique_code += str(unique_randoms())
 
