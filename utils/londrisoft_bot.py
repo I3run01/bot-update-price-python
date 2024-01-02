@@ -252,7 +252,13 @@ def print_labels(our_codes: list):
 
     pyautogui.click(450, 30)
 
-def update_and_print_products(products: list, status: Union[Literal['increase'], Literal['any']]):
+def update_and_print_products(products: list, 
+                              status: Union[
+                                    Literal['increase'],
+                                    Literal['any'],
+                                    Literal['inc_or_dec20']
+                                    ]
+                              ):
     
     open_gestor()
 
@@ -261,9 +267,14 @@ def update_and_print_products(products: list, status: Union[Literal['increase'],
 
     for product in products:
 
+
+        #TODO: chech the product.old_selling_price <= 0.8*product.new_selling_price
         if(
-            status == 'increase' and 
-            product.old_selling_price >= product.new_selling_price and 
+            (status == 'increase' or status == 'inc_or_dec20') and 
+            (
+                product.old_selling_price >= product.new_selling_price or 
+                product.old_selling_price <= 0.8*product.new_selling_price
+            ) and 
             product.ours_code and
             is_product_created_today(product.ours_code) == False
         ):    

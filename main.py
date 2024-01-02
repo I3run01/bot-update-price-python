@@ -130,13 +130,15 @@ show_products_list()
 
 while True:
 
+
+
     print(30*'=')
 
     try:
         print('0 - Change the product margin.')
         print('1 - Insert the quantity for the sub-item.')
         print('2 - Change the cEAN of the products.')
-        print('3 - Create, print and update the products that increased')
+        print('3 - Create, print and update the products that increased or decreased at least 20%')
         print('4 - Just Create and update the products that increased')
         print('5 - Just print the products that increased')
         print('6 - Change all the product price')
