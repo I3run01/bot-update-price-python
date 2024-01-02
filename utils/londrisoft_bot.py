@@ -47,10 +47,11 @@ def open_gestor():
     pyautogui.write('1515')
     pyautogui.press('enter')
 
+#TODO: chack this def
 def update_product_price(
         product: object,
         status: Union[Literal['increase'], Literal['any']]
-):
+    ):
 
     pyautogui.tripleClick(200, 200)
 
@@ -62,15 +63,6 @@ def update_product_price(
 
     pyautogui.tripleClick(750, 650)
 
-    if(status == 'any'):
-        new_price = product.new_selling_price
-
-        new_price_with_comma = new_price.replace(".", ",")
-
-        pyautogui.write(new_price_with_comma)
-
-        pyautogui.press('Enter')
-
     pyautogui.hotkey('ctrl', 'c')
 
     content_price_str = pyperclip.paste().strip().replace(",", ".")
@@ -79,21 +71,34 @@ def update_product_price(
 
     isProductCreatedToday = is_product_created_today(product.ours_code)
 
-    if(ls_price >= product.new_selling_price):
-        product.new_selling_price = ls_price
-        product.print_product = False
+    if(status == 'any'):
+        if(ls_price == product.new_selling_price):
+            product.print_product = False
+        
+        new_price = product.new_selling_price
 
-    else:
-        new_price_str = str(product.new_selling_price)
+        new_price_with_comma = new_price.replace(".", ",")
 
-        new_price = new_price_str.replace('.', ',')
-
-        pyautogui.write(new_price)
+        pyautogui.write(new_price_with_comma)
 
         pyautogui.press('Enter')
 
-    if(isProductCreatedToday):
-        product.print_product = True
+    else:
+        if(ls_price >= product.new_selling_price):
+            product.new_selling_price = ls_price
+            product.print_product = False
+
+        else:
+            new_price_str = str(product.new_selling_price)
+
+            new_price = new_price_str.replace('.', ',')
+
+            pyautogui.write(new_price)
+
+            pyautogui.press('Enter')
+
+        if(isProductCreatedToday):
+            product.print_product = True
 
     pyautogui.click(300, 100)
 
@@ -252,14 +257,8 @@ def print_labels(our_codes: list):
 
     pyautogui.click(450, 30)
 
-def update_and_print_products(products: list, 
-                              status: Union[
-                                    Literal['increase'],
-                                    Literal['any'],
-                                    Literal['inc_or_dec20']
-                                    ]
-                              ):
-    
+def update_and_print_products(products: list,status: Union[Literal['increase'],Literal['any'],]):
+
     open_gestor()
 
     pyautogui.click(200,650)
@@ -267,14 +266,9 @@ def update_and_print_products(products: list,
 
     for product in products:
 
-
-        #TODO: chech the product.old_selling_price <= 0.8*product.new_selling_price
         if(
-            (status == 'increase' or status == 'inc_or_dec20') and 
-            (
-                product.old_selling_price >= product.new_selling_price or 
-                product.old_selling_price <= 0.8*product.new_selling_price
-            ) and 
+            status == 'increase' and 
+            product.old_selling_price >= product.new_selling_price and 
             product.ours_code and
             is_product_created_today(product.ours_code) == False
         ):    

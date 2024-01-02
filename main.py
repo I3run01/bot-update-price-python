@@ -130,18 +130,17 @@ show_products_list()
 
 while True:
 
-
-
     print(30*'=')
 
     try:
         print('0 - Change the product margin.')
         print('1 - Insert the quantity for the sub-item.')
         print('2 - Change the cEAN of the products.')
-        print('3 - Create, print and update the products that increased or decreased at least 20%')
+        print('3 - Create, print and update the products that increased')
         print('4 - Just Create and update the products that increased')
         print('5 - Just print the products that increased')
         print('6 - Change all the product price')
+        print('7 - Create, print and update all the products')
         print('8 - To put ours_code')
         print('9 - Show all products')
         print(30*'=')
@@ -294,6 +293,20 @@ while True:
                 time.sleep(1)
 
                 print(30 * '-')
+
+        elif(option == '7'):
+            print('OP: 7. Create, print and update all the products')
+
+            time.sleep(1)
+
+            if(all_products_have_ours_code_or_cEAN() != True):
+                raise ValueError("All Products should cEAN or Ours code")
+
+            bot.update_and_print_products(products_list, 'any')
+
+            for product in products_list:
+                if(float(product.new_selling_price) > float(product.old_selling_price)):
+                    csv_manipulation.update_row(csv_path, product)
 
         elif(option == '8'):
             print('OP 8: Change ours code')
