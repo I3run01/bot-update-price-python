@@ -75,7 +75,7 @@ def update_product_price(
         if(ls_price == product.new_selling_price):
             product.print_product = False
         
-        new_price = product.new_selling_price
+        new_price = str(product.new_selling_price)
 
         new_price_with_comma = new_price.replace(".", ",")
 
