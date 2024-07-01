@@ -4,7 +4,7 @@ from Classes.Product import Product
 from termcolor import colored
 from colored import fg, attr
 from utils.obj_from_list import find_product_by_ean
-import utils.londrisoft_bot as bot
+import utils.bot.londrisoft_bot as bot
 import time
 
 products_list = []
@@ -73,6 +73,7 @@ while True:
 csv_path = f'database/{res["name"]}.csv'
 
 products = res['products']
+1515
 
 csv_manipulation.create_csv_if_not_exists(csv_path)
 
@@ -128,7 +129,7 @@ for product in products:
 
 show_products_list()
 
-while True:
+while True: 
 
     print(30*'=')
 

@@ -4,6 +4,7 @@ import pyautogui
 import time
 from datetime import datetime
 import random
+import pyperclip
 
 current_date = datetime.now()
 
@@ -15,7 +16,7 @@ code_verifification = str(current_day) + str(current_month) + str(current_year)
 
 random_num_list = []
 
-pyautogui.PAUSE = 1.8
+pyautogui.PAUSE = 0.5
 
 def is_product_created_today(our_code):
     return our_code[0: len(str(code_verifification))] == str(code_verifification)
@@ -29,25 +30,40 @@ def unique_randoms():
             return random_number
 
 def open_gestor():
+    pyautogui.PAUSE = 0.5
+    gestor_path = r'C:\londrisoft\Gestor_Prime\gestor.exe'
+    email = 'mercadovizinhanca1762@gmail.com'
+    password = '1515'
 
     #open the gestor
-    pyautogui.press('winleft')
-    pyautogui.write('gestor')
-    pyautogui.press('enter')
-    pyautogui.tripleClick(400, 340)
-    pyautogui.hotkey('ctrl','c')
+    pyautogui.hotkey('winleft','r')
+    pyautogui.write(gestor_path)
+    pyautogui.press('Enter')
 
-    copied_text = pyperclip.paste().strip()
+    time.sleep(2)
 
-    if(copied_text != 'mercadovizinhanca1762@gmail.com'):
-        print(copied_text)
-        raise ValueError("pyautogui crashed")
-    
-    pyautogui.click(400, 430)
-    pyautogui.write('1515')
-    pyautogui.press('enter')
+    pyautogui.hotkey('winleft', 'tab')
 
-#TODO: chack this def
+    time.sleep(0.5)
+
+    pyautogui.press('left')
+
+    pyautogui.press('Enter')
+
+    time.sleep(1.5)
+
+    pyautogui.tripleClick(400, 350)
+
+    pyautogui.write(email)
+
+    pyautogui.press('tab')
+
+    pyautogui.write(password)
+
+    pyautogui.press('Enter')
+
+    time.sleep(7)
+
 def update_product_price(
         product: object,
         status: Union[Literal['increase'], Literal['any']]
@@ -83,6 +99,10 @@ def update_product_price(
 
         pyautogui.press('Enter')
 
+        print(10*'-')
+        print(product.ours_code)
+        print(10*'-')
+
     else:
         if(ls_price >= product.new_selling_price):
             product.new_selling_price = ls_price
@@ -97,6 +117,10 @@ def update_product_price(
 
             pyautogui.press('Enter')
 
+            print(10*'-')
+            print(product.ours_code)
+            print(10*'-')
+
         if(isProductCreatedToday):
             product.print_product = True
 
@@ -108,12 +132,19 @@ def has_product_in_LS(product):
     
     if(product.ours_code == None and product.c_ean == None):
          raise ValueError(f"The Product {product.nfe_name} has no cEAN and Ours code")
+    pyautogui.tripleClick(200, 200)
+
+    pyautogui.write('GENERICO')
+
+    pyautogui.press('Enter')
 
     pyperclip.copy('')
 
     pyautogui.tripleClick(600, 200)
     pyautogui.write(product.c_ean)
     pyautogui.press('Enter')
+
+    time.sleep(1.5)
 
     pyautogui.hotkey('ctrl', 'c')
     pyautogui.press('Enter')
@@ -133,6 +164,7 @@ def has_product_in_LS(product):
     return True
 
 def create_product(product):
+    pyautogui.PAUSE = 0.5
     while True:
 
         unique_code = str(current_day) + str(current_month) + str(current_year)[-2:]
@@ -236,8 +268,16 @@ def create_product(product):
 
     pyautogui.click(300, 100)
 
+    print(10*'-')
+    print(product.ours_code)
+    print(10*'-')
+
 def print_labels(our_codes: list):
+
     pyautogui.click(900,520)
+
+    time.sleep(1.5)
+
     pyautogui.click(250,100)
 
     for our_code in our_codes:
@@ -247,9 +287,24 @@ def print_labels(our_codes: list):
         time.sleep(.5)
         pyautogui.press('enter')
         pyautogui.press('enter')
-        pyautogui.click(480,600)
-        pyautogui.press('enter')
-        pyautogui.click(260,60)
+
+        for c in range(0, 2):
+            pyautogui.click(600,550)
+
+            pyautogui.click(600,580)
+
+        pyautogui.press('tab')
+
+        pyautogui.press('Enter')
+
+        time.sleep(7)
+
+        pyautogui.press('Enter')
+
+        for c in range(0, 6):
+            pyautogui.press('Up')
+
+        pyautogui.press('Enter')
 
     pyautogui.press('esc')
 
@@ -261,19 +316,17 @@ def update_and_print_products(products: list,status: Union[Literal['increase'],L
 
     open_gestor()
 
+    time.sleep(1.5)
+
     pyautogui.click(200,650)
+
+    time.sleep(1.5)
+
     pyautogui.click(200,360)
 
-    for product in products:
+    time.sleep(5)
 
-        if(
-            status == 'increase' and 
-            product.old_selling_price >= product.new_selling_price and 
-            product.ours_code and
-            is_product_created_today(product.ours_code) == False
-        ):    
-            product.print_product = False
-            continue
+    for product in products:
 
         has_product_internally = has_product_in_LS(product)
         
@@ -281,23 +334,32 @@ def update_and_print_products(products: list,status: Union[Literal['increase'],L
             update_product_price(product, status)
 
         else:
-            create_product(product)  
+            create_product(product)
                 
     pyautogui.press('esc')
 
+    time.sleep(1.5)
+
     pyautogui.press('esc')
+
+    time.sleep(1.5)
 
     pyautogui.press('Enter')
 
+    time.sleep(1.5)
+
     pyautogui.click(100, 330)
 
+    time.sleep(2)
+
     our_code_print_list = []
+
     for product in products:
         if(product.print_product):
             our_code_print_list.append(product.ours_code)
-        
-    print_labels(our_code_print_list)
 
+    print_labels(our_codes=our_code_print_list)
+    
 def just_update_products(products: list, status: Union[Literal['increase'], Literal['any']]):
 
     open_gestor()

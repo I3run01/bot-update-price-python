@@ -42,7 +42,6 @@ def get_row_by_cProd(file_path, cProd):
         raise ValueError("Product does not exist")
 
 def update_row(file_path, product: object):
-
     current_date = datetime.now()
 
     current_day = current_date.day
@@ -65,16 +64,15 @@ def update_row(file_path, product: object):
             product_index = row_number
             break
     
-    if(product_index != None):
+    if(product_index is not None):
         df.loc[product_index, 'selling_price'] = product.new_selling_price
         df.loc[product_index, 'date_of_last_update'] = current_date
-
     else:
         new_row = pd.DataFrame({
             'cProd': [str(product.c_prod)],
             'ours_code': [f'f{str(product.ours_code)}'], 
             'margin': [product.margin], 
-            'cEAN': [f'f{product.c_ean}'], 
+            'cEAN': [f'{product.c_ean}'], 
             'selling_price': [product.new_selling_price],
             "cost_price": [product.cost_price],
             "ncm": [product.ncm],
@@ -82,6 +80,10 @@ def update_row(file_path, product: object):
             'nfe_name': [product.nfe_name],
             'sub_itens_quantity': [product.sub_item_quantity]
         })
+
+        # Drop empty or all-NA columns in the new_row DataFrame
+        new_row = new_row.dropna(axis=1, how='all')
+
         df = pd.concat([df, new_row], ignore_index=True)
 
     df.to_csv(file_path, index=False)
