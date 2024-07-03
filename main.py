@@ -353,5 +353,5 @@ def nfe_product():
             return
 
 while True: 
-    time.sleep(2)     
+    time.sleep(0.5)     
     nfe_product()

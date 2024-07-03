@@ -18,6 +18,34 @@ random_num_list = []
 
 pyautogui.PAUSE = 0.5
 
+def from_main_menu_to_product_registration():
+    time.sleep(1.5)
+
+    pyautogui.click(200,650)
+
+    time.sleep(1.5)
+
+    pyautogui.click(200,360)
+
+    time.sleep(5)
+
+def from_product_registration_to_main_menu():
+    pyautogui.press('esc')
+
+    time.sleep(1.5)
+
+    pyautogui.click(500,660)
+
+    time.sleep(1.5)
+
+    pyautogui.press('Enter')
+
+    time.sleep(1.5)
+
+    pyautogui.click(100, 330)
+
+    time.sleep(2)
+
 def is_product_created_today(our_code):
     return our_code[0: len(str(code_verifification))] == str(code_verifification)
 
@@ -53,6 +81,13 @@ def open_gestor():
     time.sleep(1.5)
 
     pyautogui.tripleClick(400, 350)
+
+    pyautogui.hotkey('ctrl','c')
+
+    copied_text = pyperclip.paste().strip()
+
+    if copied_text != email:
+        raise ValueError(f"Error: the app crashed")
 
     pyautogui.write(email)
 
@@ -316,15 +351,7 @@ def update_and_print_products(products: list,status: Union[Literal['increase'],L
 
     open_gestor()
 
-    time.sleep(1.5)
-
-    pyautogui.click(200,650)
-
-    time.sleep(1.5)
-
-    pyautogui.click(200,360)
-
-    time.sleep(5)
+    from_main_menu_to_product_registration()
 
     for product in products:
 
@@ -336,21 +363,7 @@ def update_and_print_products(products: list,status: Union[Literal['increase'],L
         else:
             create_product(product)
                 
-    pyautogui.press('esc')
-
-    time.sleep(1.5)
-
-    pyautogui.press('esc')
-
-    time.sleep(1.5)
-
-    pyautogui.press('Enter')
-
-    time.sleep(1.5)
-
-    pyautogui.click(100, 330)
-
-    time.sleep(2)
+    from_product_registration_to_main_menu()
 
     our_code_print_list = []
 
