@@ -100,8 +100,7 @@ def open_gestor():
     time.sleep(7)
 
 def update_product_price(
-        product: object,
-        status: Union[Literal['increase'], Literal['any']]
+        product: object
     ):
 
     pyautogui.tripleClick(200, 200)
@@ -122,39 +121,22 @@ def update_product_price(
 
     isProductCreatedToday = is_product_created_today(product.ours_code)
 
-    if(status == 'any'):
-        if(ls_price == product.new_selling_price):
-            product.print_product = False
-        
-        new_price = str(product.new_selling_price)
+    if(ls_price >= product.min_new_selling_price and ls_price <= product.max_new_selling_price):
+        product.new_selling_price = ls_price
+        product.print_product = False
 
-        new_price_with_comma = new_price.replace(".", ",")
+    else:
+        new_price_str = str(product.new_selling_price)
 
-        pyautogui.write(new_price_with_comma)
+        new_price = new_price_str.replace('.', ',')
+
+        pyautogui.write(new_price)
 
         pyautogui.press('Enter')
 
         print(10*'-')
         print(product.ours_code)
         print(10*'-')
-
-    else:
-        if(ls_price >= product.new_selling_price):
-            product.new_selling_price = ls_price
-            product.print_product = False
-
-        else:
-            new_price_str = str(product.new_selling_price)
-
-            new_price = new_price_str.replace('.', ',')
-
-            pyautogui.write(new_price)
-
-            pyautogui.press('Enter')
-
-            print(10*'-')
-            print(product.ours_code)
-            print(10*'-')
 
         if(isProductCreatedToday):
             product.print_product = True
@@ -347,7 +329,7 @@ def print_labels(our_codes: list):
 
     pyautogui.click(450, 30)
 
-def update_and_print_products(products: list,status: Union[Literal['increase'],Literal['any'],]):
+def update_and_print_products(products: list):
 
     open_gestor()
 
@@ -358,7 +340,7 @@ def update_and_print_products(products: list,status: Union[Literal['increase'],L
         has_product_internally = has_product_in_LS(product)
         
         if(has_product_internally):
-            update_product_price(product, status)
+            update_product_price(product)
 
         else:
             create_product(product)

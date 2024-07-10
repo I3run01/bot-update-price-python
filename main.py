@@ -27,7 +27,15 @@ def nfe_product():
             print(f'NFE name: {item.nfe_name}')
             print(f'cEAN: {colored(item.c_ean, "yellow")}')
             print(f'Margin (%): {fg(margin_color)}{item.margin}{attr(0)}')
+
+            min_price_formatted = f"{item.min_new_selling_price:.2f}"
+            print(f'min price (R$): {colored(min_price_formatted, "yellow")}')
+
             print(f'Price (R$): {colored(item.old_selling_price, "red")} -> {colored(item.new_selling_price, "green")}')
+
+            max_price_formatted = f"{item.max_new_selling_price:.2f}"
+            print(f'max price (R$): {colored(max_price_formatted, "magenta")}')
+
             print('')
             
             if(item.ours_code == None and item.c_ean == None):
@@ -142,11 +150,7 @@ def nfe_product():
             print('0 - Change the product margin.')
             print('1 - Insert the quantity for the sub-item.')
             print('2 - Change the cEAN of the products.')
-            print('3 - Create, print and update the products that increased')
-            print('4 - Just Create and update the products that increased')
-            print('5 - Just print the products that increased')
-            print('6 - Change all the product price')
-            print('7 - Create, print and update all the products')
+            print('3 - Create, print and update the products')
             print('8 - To put ours_code')
             print('9 - Show all products')
             print('99 - return')
@@ -246,70 +250,7 @@ def nfe_product():
                 if(all_products_have_ours_code_or_cEAN() != True):
                     raise ValueError("All Products should cEAN or Ours code")
 
-                bot.update_and_print_products(products_list, 'increase')
-
-                for product in products_list:
-                    if(float(product.new_selling_price) > float(product.old_selling_price)):
-                        csv_manipulation.update_row(csv_path, product)
-
-            elif(option == '4'):
-                print('OP: 4. Just Create and update the products that increased')
-                time.sleep(1)
-
-                
-                if(all_products_have_ours_code_or_cEAN() == False):
-                    raise ValueError("All Products should cEAN or Ours code")
-
-                bot.just_update_products(products_list, 'increase')
-
-                for product in products_list:
-                    if(float(product.new_selling_price) > float(product.old_selling_price)):
-                            csv_manipulation.update_row(csv_path, product)
-            
-            elif(option == '5'):
-                print('OP. 5. Just print the products that increased')
-                time.sleep(1)
-
-                if(all_products_have_ours_code_or_cEAN() == False):
-                    raise ValueError("All Products should cEAN or Ours code")
-                
-                bot.just_print_products(products_list, 'increase')
-
-                for product in products_list:
-                    if(float(product.new_selling_price) > float(product.old_selling_price)):
-                        csv_manipulation.update_row(csv_path, product)
-
-            elif(option == '6'):
-                print('OP. 6. You will change the selling price of all products')
-
-                time.sleep(1)
-
-                for product in products_list:
-
-                    print(f'the product name is: {colored(product.nfe_name, "blue")}')
-
-                    new_product_price = str(input('Put the new price or press enter to ignore: '))
-
-                    if(new_product_price == ''):
-                        continue
-
-                    product.new_selling_price = float(new_product_price)
-
-                    print(f'the new Product Price is {colored(product.new_selling_price, "yellow")}')
-
-                    time.sleep(1)
-
-                    print(30 * '-')
-
-            elif(option == '7'):
-                print('OP: 7. Create, print and update all the products')
-
-                time.sleep(1)
-
-                if(all_products_have_ours_code_or_cEAN() != True):
-                    raise ValueError("All Products should cEAN or Ours code")
-
-                bot.update_and_print_products(products_list, 'any')
+                bot.update_and_print_products(products_list)
 
                 for product in products_list:
                     if(float(product.new_selling_price) > float(product.old_selling_price)):
