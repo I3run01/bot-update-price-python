@@ -1,5 +1,5 @@
 import Request.sendXML as req
-import utils.csv_manipulation as csv_manipulation
+import utils.csv_manager.csv_manipulation as csv_manipulation
 from Classes.Product import Product
 from termcolor import colored
 from colored import fg, attr
@@ -75,13 +75,16 @@ def nfe_product():
             root.attributes('-topmost', True)
             file_path = filedialog.askopenfilename(filetypes=[("XML files", "*.xml")])
 
+            print('running')
             with open(file_path, 'rb') as f:
                 files = {'file': f}
                 res = req.sendXML(files)
 
+
             break
 
         except:
+            print('something wrong happened')
             continue
 
     csv_path = f'database/{res["name"]}.csv'
@@ -98,17 +101,17 @@ def nfe_product():
             )
         
             new_product = Product(
-                    c_prod = f'f{product["cProd"]}',
-                    ours_code = product_datas["ours_code"][1:],
-                    c_ean = product_datas['cEAN'][1:],
-                    cost_price= float(product['costPrice']),
-                    ncm = product['ncm'],
-                    cest = product['cest'],
-                    commercial_name = product['comercialName'],
-                    nfe_name= product['nfeName'],
-                    margin=product_datas["margin"],
-                    old_selling_price = float(product_datas["selling_price"]),
-                )
+                c_prod = f'f{product["cProd"]}',
+                ours_code = product_datas["ours_code"][1:],
+                c_ean = product_datas['cEAN'][1:],
+                cost_price= float(product['costPrice']),
+                ncm = product['ncm'],
+                cest = product['cest'],
+                commercial_name = product['comercialName'],
+                nfe_name= product['nfeName'],
+                margin=product_datas["margin"],
+                old_selling_price = float(product_datas["selling_price"]),
+            )
             
             if(str(product_datas["sub_itens_quantity"]) != 'nan'):
                 product_datas_sub_itens_quantity = product_datas["sub_itens_quantity"]
@@ -142,7 +145,7 @@ def nfe_product():
 
     show_products_list()
 
-    while True: 
+    while True:
 
         print(30*'=')
 
@@ -172,8 +175,10 @@ def nfe_product():
                     
                     if(product.ours_code != None):
                         continue
-
+                    
+                    print(10*'-=')
                     print(f'the product name is: {colored(product.nfe_name, "blue")}')
+                    print(f'the product price is: {colored(product.new_selling_price, "green")}')
 
                     new_margin = str(input('Put the new margin or Just press enter to ignore: '))
 
@@ -199,7 +204,9 @@ def nfe_product():
                     if(product.ours_code != None):
                         continue
 
+                    print(10*'-=')
                     print(f'the product name is: {colored(product.nfe_name, "blue")}')
+                    print(f'the product price is: {colored(product.new_selling_price, "green")}')
                     
                     sub_item_quantity = input('Put the quantity of the sub-item or Press Enter to ignore: ')
 
@@ -225,7 +232,9 @@ def nfe_product():
                     if(product.ours_code != None):
                         continue
 
+                    print(10*'-=')
                     print(f'the product name is: {colored(product.nfe_name, "blue")}')
+                    print(f'the product price is: {colored(product.new_selling_price, "green")}')
 
                     new_c_ean = str(input('Put the new cEAN or press enter to ignore: '))
 
@@ -253,8 +262,7 @@ def nfe_product():
                 bot.update_and_print_products(products_list)
 
                 for product in products_list:
-                    if(float(product.new_selling_price) > float(product.old_selling_price)):
-                        csv_manipulation.update_row(csv_path, product)
+                    csv_manipulation.update_row(csv_path, product)
 
             elif(option == '8'):
                 print('OP 8: Change ours code')
@@ -265,7 +273,9 @@ def nfe_product():
                     if(product.ours_code != None):
                         continue
 
+                    print(10*'-=')
                     print(f'the product name is: {colored(product.nfe_name, "blue")}')
+                    print(f'the product price is: {colored(product.new_selling_price, "green")}')
 
                     new_ours_code = str(input('Put the new Ours code or JUST press enter to ignore: '))
 

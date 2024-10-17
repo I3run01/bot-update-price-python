@@ -5,6 +5,8 @@ import time
 from datetime import datetime
 import random
 import pyperclip
+import os
+import csv
 
 current_date = datetime.now()
 
@@ -17,6 +19,20 @@ code_verifification = str(current_day) + str(current_month) + str(current_year)
 random_num_list = []
 
 pyautogui.PAUSE = 0.5
+
+def add_product_code_to_csv(product_code):
+    csv_file = 'products_code_list_to_print.csv'
+
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    file_exists = os.path.isfile(csv_file)
+
+    with open(csv_file, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        
+        if not file_exists:
+            writer.writerow(['Date', 'Code'])
+
+        writer.writerow([current_date, product_code])
 
 def from_main_menu_to_product_registration():
     time.sleep(1.5)
@@ -136,6 +152,7 @@ def update_product_price(
 
         print(10*'-')
         print(product.ours_code)
+        add_product_code_to_csv(product.ours_code)
         print(10*'-')
 
         if(isProductCreatedToday):
@@ -287,7 +304,10 @@ def create_product(product):
 
     print(10*'-')
     print(product.ours_code)
+    add_product_code_to_csv(product.ours_code)
     print(10*'-')
+
+    time.sleep(1)
 
 def print_labels(our_codes: list):
 

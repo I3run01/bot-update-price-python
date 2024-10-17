@@ -32,8 +32,8 @@ class Product:
         self._nfe_name = nfe_name
         self._margin = margin
         self._new_selling_price = selling_price(cost_price, margin)
-        self._max_new_selling_price = 1.05*selling_price(cost_price, margin)
-        self._min_new_selling_price = 0.80*selling_price(cost_price, margin)
+        self._min_new_selling_price = 0.95*selling_price(cost_price, margin)
+        self._max_new_selling_price = 1.25*selling_price(cost_price, margin)
         self._old_selling_price = old_selling_price
         self._sub_item_quantity = None
         self._print_product = True
@@ -103,8 +103,8 @@ class Product:
         self._margin = value
 
         self._new_selling_price = selling_price(self._cost_price, self._margin)
-        self._min_new_selling_price = 0.80 * selling_price(self._cost_price, self._margin)
-        self._max_new_selling_price = 1.05 * selling_price(self._cost_price, self._margin)
+        self._min_new_selling_price = 0.95 * selling_price(self._cost_price, self._margin)
+        self._max_new_selling_price = 1.25 * selling_price(self._cost_price, self._margin)
 
     @ours_code.setter
     def ours_code(self, value: str):
@@ -113,8 +113,8 @@ class Product:
     @new_selling_price.setter
     def new_selling_price(self, value: str):
         self._new_selling_price = value
-        self._min_new_selling_price = 0.80 * value
-        self._max_new_selling_price = 1.05 * value
+        self._min_new_selling_price = 0.95 * value
+        self._max_new_selling_price = 1.25 * value
 
     @c_ean.setter
     def c_ean(self, value: str):
@@ -127,6 +127,16 @@ class Product:
         self._cost_price = self._cost_price/value
 
         self._new_selling_price = selling_price(
+            self._cost_price,
+            self._margin
+        )
+
+        self._min_new_selling_price = 0.95 * selling_price(
+            self._cost_price,
+            self._margin
+        )
+
+        self._max_new_selling_price = 1.25 * selling_price(
             self._cost_price,
             self._margin
         )
