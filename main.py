@@ -4,9 +4,9 @@ from Classes.Product import Product
 from termcolor import colored
 from colored import fg, attr
 import utils.bot.londrisoft_bot as bot
-from tkinter import filedialog
-import tkinter as tk
+
 import time
+import utils.get_file_path.get_file_path as get_file_path
 
 def nfe_product():
     products_list = []
@@ -70,22 +70,17 @@ def nfe_product():
 
     while True:
         try:
-            root = tk.Tk()
-            root.withdraw()
-            root.attributes('-topmost', True)
-            file_path = filedialog.askopenfilename(filetypes=[("XML files", "*.xml")])
+            file_path = get_file_path.get_file_path()
 
             print('running')
             with open(file_path, 'rb') as f:
                 files = {'file': f}
                 res = req.sendXML(files)
 
-
             break
 
-        except:
-            print('something wrong happened')
-            continue
+        except Exception as e:
+            print(f"Error: {e}")
 
     csv_path = f'database/{res["name"]}.csv'
 
@@ -99,7 +94,7 @@ def nfe_product():
                 csv_path, 
                 f'f{product["cProd"]}'
             )
-        
+
             new_product = Product(
                 c_prod = f'f{product["cProd"]}',
                 ours_code = product_datas["ours_code"][1:],
@@ -120,6 +115,7 @@ def nfe_product():
             products_list.append(new_product)
             
         except:
+
             new_product = Product(
                     c_prod = f'f{product["cProd"]}',
                     ours_code = None,
@@ -154,6 +150,7 @@ def nfe_product():
             print('1 - Insert the quantity for the sub-item.')
             print('2 - Change the cEAN of the products.')
             print('3 - Create, print and update the products')
+            print('4 - Reprint the code thats needs to be update')
             print('8 - To put ours_code')
             print('9 - Show all products')
             print('99 - return')
@@ -263,6 +260,13 @@ def nfe_product():
 
                 for product in products_list:
                     csv_manipulation.update_row(csv_path, product)
+
+            elif(option == '4'):
+                print('OP: 4. Will just print the last labels')
+
+                time.sleep(1)
+
+                bot.just_print_products(products_list)
 
             elif(option == '8'):
                 print('OP 8: Change ours code')

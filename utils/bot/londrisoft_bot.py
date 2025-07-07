@@ -18,7 +18,15 @@ code_verifification = str(current_day) + str(current_month) + str(current_year)
 
 random_num_list = []
 
-pyautogui.PAUSE = 0.5
+pyautogui.PAUSE = 0.4
+
+def ruturn_the_labels_that_need_to_be_update(products: list):
+    our_code_print_list = []
+    for product in products:
+        if(product.print_product):
+            our_code_print_list.append(product.ours_code)
+    
+    return our_code_print_list
 
 def add_product_code_to_csv(product_code):
     csv_file = 'products_code_list_to_print.csv'
@@ -35,32 +43,30 @@ def add_product_code_to_csv(product_code):
         writer.writerow([current_date, product_code])
 
 def from_main_menu_to_product_registration():
-    time.sleep(1.5)
+    pyautogui.PAUSE = 0.4
 
     pyautogui.click(200,650)
 
-    time.sleep(1.5)
-
     pyautogui.click(200,360)
 
-    time.sleep(5)
+    time.sleep(2)
 
 def from_product_registration_to_main_menu():
+    pyautogui.PAUSE = 0.4
+
+    time.sleep(2)
+
     pyautogui.press('esc')
 
-    time.sleep(1.5)
+    time.sleep(1)
 
     pyautogui.click(500,660)
 
-    time.sleep(1.5)
+    time.sleep(1)
 
     pyautogui.press('Enter')
 
-    time.sleep(1.5)
-
     pyautogui.click(100, 330)
-
-    time.sleep(2)
 
 def is_product_created_today(our_code):
     return our_code[0: len(str(code_verifification))] == str(code_verifification)
@@ -74,7 +80,8 @@ def unique_randoms():
             return random_number
 
 def open_gestor():
-    pyautogui.PAUSE = 0.5
+    pyautogui.PAUSE = 0.4
+
     gestor_path = r'C:\londrisoft\Gestor_Prime\gestor.exe'
     email = 'mercadovizinhanca1762@gmail.com'
     password = '1515'
@@ -84,17 +91,13 @@ def open_gestor():
     pyautogui.write(gestor_path)
     pyautogui.press('Enter')
 
-    time.sleep(2)
+    time.sleep(1)
 
     pyautogui.hotkey('winleft', 'tab')
 
-    time.sleep(0.5)
-
-    pyautogui.press('left')
-
     pyautogui.press('Enter')
 
-    time.sleep(1.5)
+    time.sleep(1)
 
     pyautogui.tripleClick(400, 350)
 
@@ -102,7 +105,7 @@ def open_gestor():
 
     copied_text = pyperclip.paste().strip()
 
-    if copied_text != email:
+    if copied_text.lower() != email:
         raise ValueError(f"Error: the app crashed")
 
     pyautogui.write(email)
@@ -113,11 +116,12 @@ def open_gestor():
 
     pyautogui.press('Enter')
 
-    time.sleep(7)
+    time.sleep(3)
 
 def update_product_price(
         product: object
     ):
+    pyautogui.PAUSE = 0.2
 
     pyautogui.tripleClick(200, 200)
 
@@ -152,15 +156,21 @@ def update_product_price(
 
         print(10*'-')
         print(product.ours_code)
+        print(product.nfe_name)
+        print(product.new_selling_price)
         add_product_code_to_csv(product.ours_code)
         print(10*'-')
 
         if(isProductCreatedToday):
             product.print_product = True
 
-    pyautogui.click(300, 100)
+        pyautogui.click(300, 100)
+
+        time.sleep(0.3)
 
 def has_product_in_LS(product):
+    pyautogui.PAUSE = 0.5
+
     if(product.ours_code):
         return True
     
@@ -172,19 +182,22 @@ def has_product_in_LS(product):
 
     pyautogui.press('Enter')
 
+    time.sleep(0.5)
+
     pyperclip.copy('')
 
     pyautogui.tripleClick(600, 200)
     pyautogui.write(product.c_ean)
     pyautogui.press('Enter')
 
-    time.sleep(1.5)
+    time.sleep(0.5)
 
     pyautogui.hotkey('ctrl', 'c')
     pyautogui.press('Enter')
     copied_text = pyperclip.paste().strip()
 
     if(len(copied_text) < 15):
+        time.sleep(1)
         return False
     
     pyautogui.tripleClick(100, 200)
@@ -195,10 +208,15 @@ def has_product_in_LS(product):
 
     product.ours_code = product_code
 
+    time.sleep(0.5)
+
     return True
 
 def create_product(product):
     pyautogui.PAUSE = 0.5
+
+    time.sleep(1)
+
     while True:
 
         unique_code = str(current_day) + str(current_month) + str(current_year)[-2:]
@@ -211,8 +229,10 @@ def create_product(product):
 
         pyautogui.press('Enter')
 
+        time.sleep(1)
+        
         pyautogui.tripleClick(750, 650)
-
+        
         pyperclip.copy('')
 
         pyautogui.hotkey('ctrl', 'c')
@@ -252,8 +272,6 @@ def create_product(product):
 
     pyautogui.moveTo(400, 690)
 
-    time.sleep(1)
-
     pyautogui.click()
 
     pyautogui.tripleClick(750, 650)
@@ -291,6 +309,8 @@ def create_product(product):
 
     pyautogui.press('esc')
 
+    time.sleep(.05)
+
     pyautogui.press('Enter')
 
     pyautogui.press('Enter')
@@ -302,18 +322,21 @@ def create_product(product):
 
     pyautogui.click(300, 100)
 
+    time.sleep(0.5)
+
     print(10*'-')
     print(product.ours_code)
+    print(product.nfe_name)
+    print(product.new_selling_price)
     add_product_code_to_csv(product.ours_code)
     print(10*'-')
 
     time.sleep(1)
 
 def print_labels(our_codes: list):
+    pyautogui.PAUSE = 0.2
 
     pyautogui.click(900,520)
-
-    time.sleep(1.5)
 
     pyautogui.click(250,100)
 
@@ -321,14 +344,11 @@ def print_labels(our_codes: list):
 
         pyautogui.tripleClick(400,400)
         pyautogui.write(our_code)
-        time.sleep(.5)
         pyautogui.press('enter')
         pyautogui.press('enter')
 
-        for c in range(0, 2):
-            pyautogui.click(600,550)
-
-            pyautogui.click(600,580)
+        pyautogui.click(600,550)
+        pyautogui.click(600,580)
 
         pyautogui.press('tab')
 
@@ -338,16 +358,16 @@ def print_labels(our_codes: list):
 
         pyautogui.press('Enter')
 
-        for c in range(0, 6):
+        for c in range(0, 8):
             pyautogui.press('Up')
+
+        pyautogui.press('Down')
 
         pyautogui.press('Enter')
 
     pyautogui.press('esc')
 
-    pyautogui.click(450, 30)
-
-    pyautogui.click(450, 30)
+    pyautogui.click(100, 340)
 
 def update_and_print_products(products: list):
 
@@ -367,51 +387,12 @@ def update_and_print_products(products: list):
                 
     from_product_registration_to_main_menu()
 
-    our_code_print_list = []
-
-    for product in products:
-        if(product.print_product):
-            our_code_print_list.append(product.ours_code)
-
+    our_code_print_list = ruturn_the_labels_that_need_to_be_update(products)
     print_labels(our_codes=our_code_print_list)
-    
-def just_update_products(products: list, status: Union[Literal['increase'], Literal['any']]):
+                  
+def just_print_products(products: list):
 
     open_gestor()
 
-    pyautogui.click(200,650)
-    pyautogui.click(200,360)
-
-    for product in products:
-        if(
-            status == 'increase' and 
-            product.old_selling_price >= product.new_selling_price and 
-            product.ours_code and
-            is_product_created_today(product.ours_code) == False
-        ):    
-            product.print_product = False
-            continue
-
-        has_product_internally = has_product_in_LS(product)
-        
-        if(has_product_internally):
-            update_product_price(product, status)
-
-        else:
-            create_product(product)
-                
-def just_print_products(products: list, status: Union[Literal['increase'], Literal['any']]):
-
-    open_gestor()
-
-    our_code_print_list = []
-    for product in products:
-
-        if(status == 'increase'):
-            if(product.new_selling_price > product.old_selling_price):
-                our_code_print_list.append(product.ours_code)
-        
-        else:
-           our_code_print_list.append(product.ours_code) 
-
-    print_labels(our_code_print_list)
+    our_code_print_list = ruturn_the_labels_that_need_to_be_update(products)
+    print_labels(our_codes=our_code_print_list)

@@ -39,6 +39,13 @@ def get_row_by_ours_code(file_path, cProd):
         return df.loc[str(cProd)]
     except KeyError:
         raise ValueError("Product does not exist")
+
+def get_row_by_cEAN(file_path, cEAN):
+    try:
+        df = pd.read_csv(file_path, index_col="cEAN")
+        return df.loc[str(cEAN)]
+    except KeyError:
+        raise ValueError(f"Product with the cEAN: {cEAN}, does not exist")
     
 def update_row(file_path, product):
     current_date = datetime.now().strftime('%m/%d/%Y')
@@ -55,7 +62,7 @@ def update_row(file_path, product):
             'cProd': [product_cProd],
             'ours_code': [f'f{product.ours_code}'],
             'margin': [product.margin],
-            'cEAN': [f'{product.c_ean}'],
+            'cEAN': [f'f{product.c_ean}'],
             'selling_price': [product.new_selling_price],
             "cost_price": [product.cost_price],
             "ncm": [product.ncm],
@@ -64,8 +71,10 @@ def update_row(file_path, product):
             'sub_itens_quantity': [product.sub_item_quantity]
         }).set_index('cProd')
 
-        new_row = new_row.dropna(axis=1, how='all')
-        df = pd.concat([df, new_row])
+        if not new_row.empty:
+            new_row = new_row.dropna(axis=1, how='all')
+        df = pd.concat([df, new_row], ignore_index=False)
+
     
     df.to_csv(file_path)
 
