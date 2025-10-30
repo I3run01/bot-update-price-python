@@ -7,6 +7,7 @@ import random
 import pyperclip
 import os
 import csv
+import keyboard
 
 current_date = datetime.now()
 
@@ -121,7 +122,7 @@ def open_gestor():
 def update_product_price(
         product: object
     ):
-    pyautogui.PAUSE = 0.2
+    pyautogui.PAUSE = 0.15
 
     pyautogui.tripleClick(200, 200)
 
@@ -131,7 +132,7 @@ def update_product_price(
 
     pyautogui.press('Enter')
 
-    pyautogui.tripleClick(750, 650)
+    pyautogui.tripleClick(835, 650)
 
     pyautogui.hotkey('ctrl', 'c')
 
@@ -340,6 +341,7 @@ def print_labels(our_codes: list):
 
     pyautogui.click(250,100)
 
+    counter = 0
     for our_code in our_codes:
 
         pyautogui.tripleClick(400,400)
@@ -347,16 +349,21 @@ def print_labels(our_codes: list):
         pyautogui.press('enter')
         pyautogui.press('enter')
 
-        pyautogui.click(600,550)
-        pyautogui.click(600,580)
+        if counter == 0:
+            pyautogui.tripleClick(540,550)
+            pyautogui.press('tab')
 
-        pyautogui.press('tab')
+            keyboard.wait('enter')
 
-        pyautogui.press('Enter')
+            time.sleep(0.5)
+
+        pyautogui.click(480,600)
 
         time.sleep(7)
 
         pyautogui.press('Enter')
+
+        time.sleep(0.5)
 
         for c in range(0, 8):
             pyautogui.press('Up')
@@ -364,6 +371,10 @@ def print_labels(our_codes: list):
         pyautogui.press('Down')
 
         pyautogui.press('Enter')
+
+        time.sleep(0.5)
+
+        counter = counter + 1
 
     pyautogui.press('esc')
 
